@@ -10,6 +10,14 @@
             <h:head>
                 <title>SCEA WEB - INICIAL</title>
             </h:head>
+            <style>
+                .zerado{
+                    background-color: #eecdd1
+                }
+                .naozerado{
+                    background-color: #dbe4ad
+                }
+            </style>
             <h:body onload="#{produtoBean.relatorioInicial()}">
                 <h:form id="form">
                     <p:messages id="msgs" showDetail="true" />
@@ -63,7 +71,7 @@
                             <p:panelGrid  columns="2" columnClasses="label,value">
                                 <h:outputText value="Destinatário:" /> <p:inputText value="#{emailBean.destinatario}" />
                                 <h:outputText value="Assunto:" /> <p:inputText value="#{emailBean.assunto}" />
-                                <h:outputText value="Mensagem:" /> <p:inputText value="#{emailBean.mensagem}" />
+                                <h:outputText value="Mensagem:" /> <p:inputTextarea value="#{emailBean.mensagem}" />
                                 <p:commandButton value="Enviar Email"  action="#{emailBean.enviarEmail()}" update="msgs,avisos,idDialogEmail"/>
                                 <p:commandButton value="Cancelar"  onclick="EmailModal.hide()"/>
                             </p:panelGrid>

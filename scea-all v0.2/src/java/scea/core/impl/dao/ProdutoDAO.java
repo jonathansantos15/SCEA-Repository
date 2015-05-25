@@ -141,10 +141,9 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		String sql=null;
 		         // System.out.println("--------- -------\n\n  ---------\n \n\n\n " + produto.getId());
 		//if(produto.getId() ==  null && produto.getNome() == null){
-                if(produto.getId() ==  null){
+                
+                if(produto.getId() ==  null || produto.getId() == 0){
 			sql = "SELECT * FROM tb_produto JOIN tb_tipodeproduto USING(id_tipodeproduto) JOIN tb_fornecedor USING(id_fornecedor) ORDER BY id_produto";
-			
-
 		}
 		//else if(produto.getId() != null && produto.getNome() == null){
 		else if(produto.getId() != null){
@@ -162,7 +161,7 @@ public class ProdutoDAO extends AbstractJdbcDAO{
 		openConnection();
 		pst = connection.prepareStatement(sql);
 		
-		if(produto.getId() != null){
+		if(produto.getId() != null && produto.getId() != 0){
 			pst.setInt(1, produto.getId());
 			
 		}
