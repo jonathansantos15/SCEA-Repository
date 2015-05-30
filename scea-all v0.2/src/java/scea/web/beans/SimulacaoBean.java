@@ -37,6 +37,7 @@ public class SimulacaoBean extends EntidadeDominioBean{
     private int quantidade;
     private Produto produto;
     private String id_usuario;
+    private String nomeProduto;
     private int id_produto;
     private String login_usuario;
     private List<Simulacao> simulacoes;
@@ -287,5 +288,19 @@ public class SimulacaoBean extends EntidadeDominioBean{
      */
     public void setSimulacaoSelecionada(Simulacao simulacaoSelecionada) {
         this.simulacaoSelecionada = simulacaoSelecionada;
+    }
+
+    /**
+     * @return the nomeProduto
+     */
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    /**
+     * @param nomeProduto the nomeProduto to set
+     */
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
     }
 }

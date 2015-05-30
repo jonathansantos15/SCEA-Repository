@@ -15,13 +15,18 @@
                 <img src="IMGSCEA.png" />
             </div>
             <p:menubar id="menubar">
-                <p:menuitem value="Fornecedor" action="Fornecedor?faces-redirect=true" />
-                <p:menuitem value="Acesso" action="Acesso?faces-redirect=true" />
-                <p:menuitem value="Produto" action="Produto?faces-redirect=true" />
-                <p:menuitem value="Entrada Estoque" action="Entrada?faces-redirect=true" />
-                <p:menuitem value="Saída Estoque" action="Saida?faces-redirect=true" />
-                <p:menuitem value="Simulações" action="Simulacao?faces-redirect=true" />
-                <p:menuitem value="Sair" />
+                <p:menuitem value="Fornecedor" action="Fornecedor?faces-redirect=true" icon="ui-icon-contact" />
+                <p:menuitem value="Acesso" action="Acesso?faces-redirect=true" icon="ui-icon-gear" />
+                <p:menuitem value="Produto" action="Produto?faces-redirect=true" icon=" ui-icon-scissors" />
+                <p:menuitem value="Entrada Estoque" action="Entrada?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-e" />
+                <p:menuitem value="Saída Estoque" action="Saida?faces-redirect=true" icon="ui-icon-arrowreturnthick-1-w" />
+                <p:menuitem value="Simulações" action="Simulacao?faces-redirect=true"  icon="ui-icon-shuffle" />
+                <p:submenu label="Gráficos" icon="ui-icon-image">
+                    <p:menuitem value="Entradas e Saídas" action="GraficoEntradaSaida?faces-redirect=true" icon="ui-icon-image" />
+                    <p:menuitem value="Estoque"  action="GraficoEstoque?faces-redirect=true" icon="ui-icon-image" />
+                    <p:menuitem value="Gráfico Dinâmico"  action="GraficoDinamico?faces-redirect=true" icon="ui-icon-image" />
+                 </p:submenu>
+                <p:menuitem value="Sair" icon="ui-icon-close" />
             </p:menubar>
         </h:form>
         <div id="conteudo">
