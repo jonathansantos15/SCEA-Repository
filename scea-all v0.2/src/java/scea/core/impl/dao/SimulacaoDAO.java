@@ -113,10 +113,10 @@ PreparedStatement pst = null;
 		
 		Simulacao simulacao = (Simulacao)entidade;
 		String sql=null;
-		if(simulacao.getProduto().getId() == null)
+		if(simulacao.getProduto().getNome() == "")
                     sql = "SELECT * FROM tb_simulacao";
                 else
-		sql = "SELECT * FROM tb_simulacao WHERE id_produto LIKE ?";
+                    sql = "SELECT * FROM tb_simulacao WHERE id_produto LIKE ?";
 	
 	
 	try {

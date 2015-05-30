@@ -45,7 +45,7 @@ public class FornecedorBean extends EntidadeDominioBean{
         Cidade cidade = new Cidade();
         Estado estado = new Estado();
         Endereco endereco = new Endereco();
-        if(getCNPJ().equals("__.___.___/____-__"))
+        if((getCNPJ()== null))
             setCNPJ("");
         fornecedor.setCNPJ(getCNPJ());
         fornecedor.setEmail(getEmail());
