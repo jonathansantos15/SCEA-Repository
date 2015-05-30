@@ -13,15 +13,25 @@
             </h:head>
             <h:body>
                 <h:form>
-                    <h:panelGrid columns="6">
-                       ID Produto:  <p:inputText value="#{transacaoBean.id}">
-                           <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
-                         </p:inputText>
-                        Quantidade: <p:inputText value="#{transacaoBean.quantidade}"/>
-
-                    </h:panelGrid>
-                    <p:commandButton value="SAIDA" action="#{transacaoBean.saida()}"  update ="avisos,msgs"/>
-                     <p:messages id="msgs" showDetail="true" />
+                    <p:fieldset legend="Dados da Saída">
+                        <h:panelGrid columns="6">
+                           ID Produto:  <p:inputText value="#{transacaoBean.id}">
+                               <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
+                             </p:inputText>
+                            Quantidade: <p:inputText value="#{transacaoBean.quantidade}"/>
+                        </h:panelGrid>
+                        </p:fieldset>
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="Realizar Saída" action="#{transacaoBean.saida()}"  update ="avisos,msgs"/>        
+                        </f:facet>
+                        <f:facet name="right">
+                           ID Produto:  <p:inputText value="#{transacaoBean.id}">
+                               <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
+                             </p:inputText> 
+                        </f:facet>
+                    </p:toolbar>
+                    <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
 
                     <p:dataTable value="#{transacaoBean.todosProdutos}" id="table" var="f" rows="10">

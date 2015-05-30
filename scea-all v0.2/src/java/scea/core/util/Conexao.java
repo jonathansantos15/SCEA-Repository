@@ -14,7 +14,7 @@ public class Conexao {
 		String driver = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://localhost:3306/sceadatabase";
 		String user = "root";
-		String password = "root";
+		String password = "ROOT";
 		Class.forName( driver );
 		Connection conn = 
 				DriverManager.getConnection( url, user, password);

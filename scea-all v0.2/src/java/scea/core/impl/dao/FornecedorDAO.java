@@ -110,6 +110,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 		
 		Fornecedor fornecedor = (Fornecedor)entidade;
 		
+                
 		if(fornecedor.getId() ==  null && !fornecedor.getCNPJ().equals("")){
 			sql = "SELECT id_fornecedor, id_endereco, id_telefone FROM tb_fornecedor WHERE cnpj = ?;";
 		}else if(fornecedor.getId() != null && fornecedor.getCNPJ().equals("")){
@@ -175,7 +176,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 		PreparedStatement pst = null;
 		
 		Fornecedor fornecedor = (Fornecedor)entidade;
-		String sql=null;
+		String sql = "SELECT * FROM tb_fornecedor f JOIN tb_endereco e using(id_endereco) "
+					+ "JOIN tb_telefone t using(id_telefone)";;
 
 		if(fornecedor.getId() ==  null && fornecedor.getCNPJ().equals("")){
 			sql = "SELECT * FROM tb_fornecedor f JOIN tb_endereco e using(id_endereco) "

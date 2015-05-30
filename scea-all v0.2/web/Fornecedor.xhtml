@@ -10,48 +10,57 @@
             <h:head>
                 <title>SCEA WEB - Fornecedores</title>
             </h:head>
-            <h:body>
+            <h:body onload="#{fornecedorBean.consultar()}">
                 <h:form>
-                    <p:outputLabel>Informações do Fornecedor</p:outputLabel>
                     <br/>
-                    <p:panelGrid columns="4">
-                        Nome: <p:inputText value="#{fornecedorBean.nome}" />
-                        Nome Fantasia: <p:inputText value="#{fornecedorBean.nomeFantasia}" />
-                        CNPJ <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
-                            <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
-                        </p:inputMask>
-                        Razão Social: <p:inputText value="#{fornecedorBean.rzSocial}" />
-                        Email: <p:inputText value="#{fornecedorBean.email}" />
-                        Telefone: <p:inputText value="#{fornecedorBean.telefoneNumero}" />
-                    </p:panelGrid>
+                    <p:fieldset legend="Informações do Fornecedor">
+                        <p:panelGrid columns="4">
+                            Nome: <p:inputText value="#{fornecedorBean.nome}" />
+                            Nome Fantasia: <p:inputText value="#{fornecedorBean.nomeFantasia}" />
+                            CNPJ <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
+                                <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
+                            </p:inputMask>
+                            Razão Social: <p:inputText value="#{fornecedorBean.rzSocial}" />
+                            Email: <p:inputText value="#{fornecedorBean.email}" />
+                            Telefone: <p:inputText value="#{fornecedorBean.telefoneNumero}" />
+                        </p:panelGrid>
+                    </p:fieldset>
                     <br />
-                    <p:outputLabel>Endereço</p:outputLabel>
-                    <br />
-                    <p:panelGrid columns="4">
-
-                        Rua: <p:inputText value="#{fornecedorBean.rua}" />
-                        Número: <p:inputText value="#{fornecedorBean.numero}" />
-                        Complemento: <p:inputText value="#{fornecedorBean.complemento}" />
-                        CEP: <p:inputMask mask="99.999-999" value="#{fornecedorBean.CEP}" />
-                        Bairro: <p:inputText value="#{fornecedorBean.bairro}" />
-                        Cidade: <p:inputText value="#{fornecedorBean.cidade}" />
-                        Estado: <p:selectOneMenu value="#{fornecedorBean.estado}">
-                            <f:selectItem itemValue="SP" itemLabel="SP" />
-                            <f:selectItem itemValue="RJ" itemLabel="RJ" />
-                            <f:selectItem itemValue="MG" itemLabel="MG"/>
-                            <f:selectItem itemValue="MA" itemLabel="MA" />
-                            <f:selectItem itemValue="CE" itemLabel="CE" />
-                            <f:selectItem itemValue="PE" itemLabel="PE" />
-                            <f:selectItem itemValue="AC" itemLabel="AC" />
-                            <f:selectItem itemValue="RS" itemLabel="RS" />
-                            <f:selectItem itemValue="RN" itemLabel="RN" />
-                            <f:selectItem itemValue="AM" itemLabel="AM" />
-                        </p:selectOneMenu>  
-                    </p:panelGrid>
+                    <p:fieldset legend="Informações de Endereço">
+                        <p:panelGrid columns="4">
+                            Rua: <p:inputText value="#{fornecedorBean.rua}" />
+                            Número: <p:inputText value="#{fornecedorBean.numero}" />
+                            Complemento: <p:inputText value="#{fornecedorBean.complemento}" />
+                            CEP: <p:inputMask mask="99.999-999" value="#{fornecedorBean.CEP}" />
+                            Bairro: <p:inputText value="#{fornecedorBean.bairro}" />
+                            Cidade: <p:inputText value="#{fornecedorBean.cidade}" />
+                            Estado: <p:selectOneMenu value="#{fornecedorBean.estado}">
+                                <f:selectItem itemValue="SP" itemLabel="SP" />
+                                <f:selectItem itemValue="RJ" itemLabel="RJ" />
+                                <f:selectItem itemValue="MG" itemLabel="MG"/>
+                                <f:selectItem itemValue="MA" itemLabel="MA" />
+                                <f:selectItem itemValue="CE" itemLabel="CE" />
+                                <f:selectItem itemValue="PE" itemLabel="PE" />
+                                <f:selectItem itemValue="AC" itemLabel="AC" />
+                                <f:selectItem itemValue="RS" itemLabel="RS" />
+                                <f:selectItem itemValue="RN" itemLabel="RN" />
+                                <f:selectItem itemValue="AM" itemLabel="AM" />
+                            </p:selectOneMenu>  
+                        </p:panelGrid>
+                    </p:fieldset>
                     <br/>
-                    <p:commandButton value="SALVAR"   action="#{fornecedorBean.Salvar()}" update ="avisos,msgs"/>
-                    <p:commandButton value="ALTERAR"   action="#{fornecedorBean.Alterar()}" update ="avisos,msgs"/>
-                    <p:commandButton value="EXCLUIR"  action="#{fornecedorBean.Excluir()}" update ="avisos,msgs"/>
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <p:commandButton value="SALVAR"   action="#{fornecedorBean.Salvar()}" update ="avisos,msgs"/>
+                            <p:commandButton value="ALTERAR"   action="#{fornecedorBean.Alterar()}" update ="avisos,msgs"/>
+                            <p:commandButton value="EXCLUIR"  action="#{fornecedorBean.Excluir()}" update ="avisos,msgs"/>
+                        </f:facet>
+                        <f:facet name="right">
+                            Pesquisar por CNPJ: <p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.CNPJ}" >
+                                <f:ajax event="keyup" render="table" listener="#{fornecedorBean.consultar()}"></f:ajax>
+                            </p:inputMask>
+                        </f:facet>
+                    </p:toolbar>
                     <br/>
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />

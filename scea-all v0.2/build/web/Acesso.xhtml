@@ -13,17 +13,28 @@
             <h:body>
                 <h:form>
                     <div id="divCampos">
-                        <h:panelGrid>
-                            Login: <p:inputText value="#{loginBean.login}" >
-                                <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
-                            </p:inputText>
-                            Senha: <p:password value="#{loginBean.senha}" />
-                        </h:panelGrid>
+                        <p:fieldset legend="Informações de Acesso">
+                            <h:panelGrid>
+                                Login: <p:inputText value="#{loginBean.login}" >
+                                    <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
+                                </p:inputText>
+                                Senha: <p:password value="#{loginBean.senha}" />
+                            </h:panelGrid>
+                        </p:fieldset>
                     </div>
                     <div id="divBotoes">
-                        <p:commandButton value="Salvar" action="#{loginBean.Salvar()}" update="avisos,mensagens" />
-                        <p:commandButton value="Excluir" action="#{loginBean.Excluir()}" update="avisos,mensagens" />
-                        <p:commandButton value="Alterar" action="#{loginBean.Alterar()}" update="avisos,mensagens"/>
+                        <p:toolbar>
+                            <f:facet name="left">
+                                <p:commandButton value="Salvar" action="#{loginBean.Salvar()}" update="avisos,mensagens" />
+                                <p:commandButton value="Excluir" action="#{loginBean.Excluir()}" update="avisos,mensagens" />
+                                <p:commandButton value="Alterar" action="#{loginBean.Alterar()}" update="avisos,mensagens"/>
+                            </f:facet>
+                            <f:facet name="right">
+                                Login: <p:inputText value="#{loginBean.login}" >
+                                    <f:ajax event="keyup" render="table" listener="#{loginBean.consultar()}" />  
+                                </p:inputText>
+                            </f:facet>
+                       </p:toolbar>
                     </div>
                     <div id="divMensagens">
                         <p:messages id="mensagens" showDetail="true" />
