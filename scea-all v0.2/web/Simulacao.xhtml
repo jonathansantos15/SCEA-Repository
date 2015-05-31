@@ -33,11 +33,6 @@
                             <p:commandButton value="Salvar" action="#{simulacaoBean.Salvar}" update="mensagens,avisos"/>
                             <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" update="mensagens,avisos"/>
                         </f:facet>
-                        <f:facet name="right">
-                            Pesquisar por ID Produto: <p:inputText value="#{simulacaoBean.id_produto}" >
-                                <f:ajax event="keyup" render="table" listener="#{simulacaoBean.consultar()}"></f:ajax>
-                            </p:inputText>
-                        </f:facet>
                     </p:toolbar>
                     <p:messages id="mensagens" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />

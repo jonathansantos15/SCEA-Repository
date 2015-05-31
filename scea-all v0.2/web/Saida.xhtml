@@ -25,11 +25,6 @@
                         <f:facet name="left">
                             <p:commandButton value="Realizar Saída" action="#{transacaoBean.saida()}"  update ="avisos,msgs"/>        
                         </f:facet>
-                        <f:facet name="right">
-                           ID Produto:  <p:inputText value="#{transacaoBean.id}">
-                               <f:ajax event="keyup" render="table" listener="#{transacaoBean.consultar()}"/>
-                             </p:inputText> 
-                        </f:facet>
                     </p:toolbar>
                     <p:messages id="msgs" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
