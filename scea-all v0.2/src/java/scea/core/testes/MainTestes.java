@@ -56,11 +56,64 @@ public class MainTestes {
         //testeValidarExistenciaTipo();
         //testeDeveEnviarEmail();
         //testeconvercaodata();
-        testeRelatorioTransaPeriodoDAO();
+        //testeRelatorioTransaPeriodoDAO();
         //testeRelatorioTransacaoPeriodoFachada();
+        
+        //testeRelatorioPeriodoProdutoDAO();
+        //testeRelatorioTransacaoProdPeriodoFachada();
         
     }//MAIN
 
+    
+    
+    
+        public static void testeRelatorioTransacaoProdPeriodoFachada(){
+            fachada = new Fachada();
+            EntidadeRelatorio rel = new EntidadeRelatorio();
+            resultado = new Resultado();
+
+            rel.setDtInicial(rel.formatData("01/03/2015"));
+            rel.setDtFinal(rel.formatData("31/04/2015"));
+            resultado = fachada.transacoesProdPeriodo(rel);
+
+            for (EntidadeDominio e : resultado.getEntidades()) {
+            EntidadeRelatorio s = (EntidadeRelatorio) e;
+            System.out.print(
+                      
+                    "ID Produto: "+ s.getTransacao().getProduto().getId()  + " " +
+                    "Produto: "+ s.getTransacao().getProduto().getNome()   + " " +
+                    "Transção: " + s.getTransacao().getTipoDeTransacao()         + " " +
+                    "Quantidade: " + s.getTransacao().getQtdeDoTipo()      + " " +
+                    "Mês: " + s.getMes());
+            System.out.println();
+        }
+    
+        }
+    
+    
+    
+        public static void testeRelatorioPeriodoProdutoDAO() {
+        RelatoriosDAO dao = new RelatoriosDAO();
+        EntidadeRelatorio r = new EntidadeRelatorio();
+        resultado = new Resultado();
+        r.setDtInicial(r.formatData("01/03/2015"));
+        r.setDtFinal(r.formatData("31/12/2015"));
+        
+        resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
+
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            EntidadeRelatorio s = (EntidadeRelatorio) e;
+            System.out.print(
+                      
+                    "ID Produto: "+ s.getTransacao().getProduto().getId()  + " " +
+                    "Produto: "+ s.getTransacao().getProduto().getNome()   + " " +
+                    "Transção: " + s.getTransacao().getTipoDeTransacao()   + " " +
+                    "Quantidade: " + s.getTransacao().getQtdeDoTipo()      + " " +
+                    "Mês: " + s.getMes());
+            System.out.println();
+        }
+
+    }
     
     
     public static void testeRelatorioTransacaoPeriodoFachada(){
@@ -74,8 +127,8 @@ public class MainTestes {
         
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
-            System.out.print("Transção: " + s.getTransacao() + " "
-                    + "Quantidade: " + s.getQuantidade() + " "
+            System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
+                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
                     + "Mês: " + s.getMes());
 
             System.out.println();
@@ -95,8 +148,8 @@ public class MainTestes {
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
-            System.out.print("Transção: " + s.getTransacao() + " "
-                    + "Quantidade: " + s.getQuantidade() + " "
+            System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao()+ " "
+                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
                     + "Mês: " + s.getMes());
 
             System.out.println();

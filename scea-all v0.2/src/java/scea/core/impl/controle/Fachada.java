@@ -9,21 +9,14 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.mail.Email;
 import scea.core.aplicacao.EmailAplicacao;
-
-import scea.dominio.modelo.Acesso;
-import scea.dominio.modelo.EntidadeDominio;
-import scea.dominio.modelo.Fornecedor;
-import scea.dominio.modelo.Produto;
-import scea.dominio.modelo.TipoDeProduto;
-import scea.dominio.modelo.Transacao;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.impl.dao.AcessoDAO;
 import scea.core.impl.dao.FornecedorDAO;
-import scea.core.impl.dao.SimulacaoDAO;
-import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.dao.ProdutoDAO;
 import scea.core.impl.dao.RelatoriosDAO;
+import scea.core.impl.dao.SimulacaoDAO;
+import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.negocio.EnviarEmail;
 import scea.core.impl.negocio.SimularEstoque;
 import scea.core.impl.negocio.ValidaCampos;
@@ -37,7 +30,13 @@ import scea.core.interfaces.IDAO;
 import scea.core.interfaces.IFachada;
 import scea.core.interfaces.IStrategy;
 import scea.core.interfaces.ITransacao;
+import scea.dominio.modelo.Acesso;
+import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Fornecedor;
+import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.Simulacao;
+import scea.dominio.modelo.TipoDeProduto;
+import scea.dominio.modelo.Transacao;
 
 
 
@@ -359,7 +358,16 @@ private Map<String, IDAO> daos;
            return resultado;
         }
         
-   
+        @Override
+        public Resultado transacoesProdPeriodo(EntidadeDominio entidade) {
+           RelatoriosDAO dao = new RelatoriosDAO();
+           EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
+           resultado = new Resultado();        
+           resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
+           return resultado;
+        }
+        
+        
         @Override
         public Resultado entrada(EntidadeDominio entidade) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -369,6 +377,8 @@ private Map<String, IDAO> daos;
         public Resultado saida(EntidadeDominio entidade) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
+   
 
     
 

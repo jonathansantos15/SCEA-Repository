@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Transacao;
 
 /**
  *
@@ -19,9 +20,10 @@ import scea.dominio.modelo.EntidadeDominio;
 public class EntidadeRelatorio extends EntidadeDominio{
     private Date dtInicial;           // Operação
     private Date dtFinal;             // Qde
-    private String Transacao;                 // Mes do intervalo
-    private int quantidade;
+    //private String nmTransacao;                 // Mes do intervalo
+    //private int quantidade;
     private String mes;
+    private Transacao transacao;
     
     
     
@@ -38,34 +40,6 @@ public class EntidadeRelatorio extends EntidadeDominio{
     return null;
     }
 
-   
-    /**
-     * @return the Transacao
-     */
-    public String getTransacao() {
-        return Transacao;
-    }
-
-    /**
-     * @param Transacao the Transacao to set
-     */
-    public void setTransacao(String Transacao) {
-        this.Transacao = Transacao;
-    }
-
-    /**
-     * @return the quantidade
-     */
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    /**
-     * @param quantidade the quantidade to set
-     */
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
 
     /**
      * @return the mes
@@ -107,6 +81,20 @@ public class EntidadeRelatorio extends EntidadeDominio{
      */
     public void setDtFinal(Date dtFinal) {
         this.dtFinal = dtFinal;
+    }
+
+    /**
+     * @return the transacao
+     */
+    public Transacao getTransacao() {
+        return transacao;
+    }
+
+    /**
+     * @param transacao the transacao to set
+     */
+    public void setTransacao(Transacao transacao) {
+        this.transacao = transacao;
     }
     
     

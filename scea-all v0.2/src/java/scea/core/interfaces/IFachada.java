@@ -31,5 +31,7 @@ public interface IFachada {
         //Relatorio
         public Resultado RelatorioInicial(EntidadeDominio entidade);
         public Resultado transacoesPeriodo(EntidadeDominio entidade);
+        public Resultado transacoesProdPeriodo(EntidadeDominio entidade);
+        
 	
 }

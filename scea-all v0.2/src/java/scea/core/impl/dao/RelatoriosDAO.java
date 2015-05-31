@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 
+
 import scea.core.impl.dao.AbstractJdbcDAO;
 import scea.dominio.modelo.EntidadeDominio;
 import scea.dominio.modelo.Fornecedor;
@@ -48,8 +49,12 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
 		while (rs.next()) {
                 EntidadeRelatorio r = new EntidadeRelatorio();
-			r.setTransacao(rs.getString("transacao"));
-                        r.setQuantidade(rs.getInt("quantidade"));
+			r.setTransacao(new Transacao());
+                        r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
+                        r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                        
+                        //r.setNmTransacao(rs.getString("transacao"));
+                        //r.setQuantidade(rs.getInt("quantidade"));
                         r.setMes(rs.getString("mes"));
                         			
 			relatorio.add(r);
@@ -61,6 +66,60 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 	return null;
 
 	}
+        
+        
+        
+        
+        public List<EntidadeDominio> consultarTransacoesProdPeriodo(EntidadeDominio entidade) {
+		PreparedStatement pst = null;
+		
+                //EntidadeRelatorio relTransProd = (EntidadeRelatorio)entidade;
+		//TransacoesProd relTransProd = (TransacoesProd)relTransPeriodo;
+		//TransacoesProd relTransProd = (TransacoesProd) entidade;
+                EntidadeRelatorio relTransProd = (EntidadeRelatorio)entidade;
+                String sql=null;
+		
+                
+                sql ="SELECT  t.id_produto as 'idprod', p.nome as 'nomeprod', t.transacao as 'transacao', sum(t.quantidade) as 'quantidade', monthname(dt_transacao) as 'mes' FROM tb_transacao t JOIN tb_produto p USING(id_produto) WHERE dt_transacao BETWEEN ? AND ? GROUP BY t.id_produto, t.transacao, month(t.dt_transacao) ORDER BY month(t.dt_transacao)";	
+                
+                
+	
+		
+	try {
+		openConnection();
+		pst = connection.prepareStatement(sql);
+		pst.setDate(1, new java.sql.Date(relTransProd.getDtInicial().getTime()));
+                pst.setDate(2, new java.sql.Date(relTransProd.getDtFinal().getTime()));
+		
+		ResultSet rs = pst.executeQuery();
+		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
+		while (rs.next()) {
+                EntidadeRelatorio r = new EntidadeRelatorio();
+		    //r.setProduto(new Produto());
+                    //r.getProduto().setId(rs.getInt("idprod"));
+                    //r.getProduto().setNome(rs.getString("nomeprod"));
+          
+                    r.setTransacao(new Transacao());
+                    r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
+                    r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                    //r.setNmTransacao(rs.getString("transacao"));
+                    //r.setQuantidade(rs.getInt("quantidade"));
+                    r.getTransacao().setProduto(new Produto());
+                    r.getTransacao().getProduto().setId(rs.getInt("idprod"));
+                    r.getTransacao().getProduto().setNome(rs.getString("nomeprod"));
+                    
+                    r.setMes(rs.getString("mes"));
+                        			
+			relatorio.add(r);
+		}
+		return relatorio;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return null;
+
+	}
+        
         
         
         public List<EntidadeDominio> consultarRelatorioInicial(EntidadeDominio entidade) {
