@@ -17,7 +17,7 @@ import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 import scea.core.aplicacao.Resultado;
-import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
+import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.impl.dao.AcessoDAO;
 import scea.core.impl.dao.FornecedorDAO;
 import scea.core.impl.dao.SimulacaoDAO;
@@ -353,7 +353,7 @@ private Map<String, IDAO> daos;
         @Override
         public Resultado transacoesPeriodo(EntidadeDominio entidade) {
            RelatoriosDAO dao = new RelatoriosDAO();
-           RelTransacoesPeriodo r =  (RelTransacoesPeriodo)entidade;
+           EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
            resultado = new Resultado();        
            resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
            return resultado;

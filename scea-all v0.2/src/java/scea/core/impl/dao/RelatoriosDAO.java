@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
+import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 
 import scea.core.impl.dao.AbstractJdbcDAO;
 import scea.dominio.modelo.EntidadeDominio;
@@ -25,10 +25,10 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 	public List<EntidadeDominio> consultarRelTransacoesPeriodo(EntidadeDominio entidade) {
 		PreparedStatement pst = null;
 		
-		RelTransacoesPeriodo relTransPeriodo = (RelTransacoesPeriodo)entidade;
+		EntidadeRelatorio relTransPeriodo = (EntidadeRelatorio)entidade;
 		String sql=null;
 		
-                if(entidade instanceof RelTransacoesPeriodo){
+                if(entidade instanceof EntidadeRelatorio){
 		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                   sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                 }
@@ -47,7 +47,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		ResultSet rs = pst.executeQuery();
 		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
 		while (rs.next()) {
-                RelTransacoesPeriodo r = new RelTransacoesPeriodo();
+                EntidadeRelatorio r = new EntidadeRelatorio();
 			r.setTransacao(rs.getString("transacao"));
                         r.setQuantidade(rs.getInt("quantidade"));
                         r.setMes(rs.getString("mes"));

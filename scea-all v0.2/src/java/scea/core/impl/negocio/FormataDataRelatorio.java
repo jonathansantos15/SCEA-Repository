@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import scea.core.aplicacao.Resultado;
-import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
+import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.interfaces.IStrategy;
 import scea.dominio.modelo.EntidadeDominio;
 

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import scea.core.aplicacao.EmailAplicacao;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
-import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
+import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.core.impl.controle.Fachada;
 import scea.core.impl.controle.FachadaTransacao;
 import scea.core.impl.dao.RelatoriosDAO;
@@ -56,8 +56,8 @@ public class MainTestes {
         //testeValidarExistenciaTipo();
         //testeDeveEnviarEmail();
         //testeconvercaodata();
-        //testeRelatorioTransaPeriodo();
-        testeRelatorioTransacaoPeriodoFachada();
+        testeRelatorioTransaPeriodoDAO();
+        //testeRelatorioTransacaoPeriodoFachada();
         
     }//MAIN
 
@@ -65,7 +65,7 @@ public class MainTestes {
     
     public static void testeRelatorioTransacaoPeriodoFachada(){
         fachada = new Fachada();
-        RelTransacoesPeriodo rel = new RelTransacoesPeriodo();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
         
         rel.setDtInicial(rel.formatData("01/03/2015"));
@@ -73,7 +73,7 @@ public class MainTestes {
         resultado = fachada.transacoesPeriodo(rel);
         
         for (EntidadeDominio e : resultado.getEntidades()) {
-            RelTransacoesPeriodo s = (RelTransacoesPeriodo) e;
+            EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao() + " "
                     + "Quantidade: " + s.getQuantidade() + " "
                     + "Mês: " + s.getMes());
@@ -84,9 +84,9 @@ public class MainTestes {
     }
     
     
-    public static void testeRelatorioTransaPeriodo() {
+    public static void testeRelatorioTransaPeriodoDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
-        RelTransacoesPeriodo r = new RelTransacoesPeriodo();
+        EntidadeRelatorio r = new EntidadeRelatorio();
         resultado = new Resultado();
         r.setDtInicial(r.formatData("01/03/2015"));
         r.setDtFinal(r.formatData("31/12/2015"));
@@ -94,7 +94,7 @@ public class MainTestes {
         resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
 
         for (EntidadeDominio e : resultado.getEntidades()) {
-            RelTransacoesPeriodo s = (RelTransacoesPeriodo) e;
+            EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao() + " "
                     + "Quantidade: " + s.getQuantidade() + " "
                     + "Mês: " + s.getMes());

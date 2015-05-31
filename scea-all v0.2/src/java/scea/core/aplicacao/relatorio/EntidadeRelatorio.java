@@ -16,7 +16,7 @@ import scea.dominio.modelo.EntidadeDominio;
  *
  * @author Felipe
  */
-public class RelTransacoesPeriodo extends EntidadeDominio{
+public class EntidadeRelatorio extends EntidadeDominio{
     private Date dtInicial;           // Operação
     private Date dtFinal;             // Qde
     private String Transacao;                 // Mes do intervalo
@@ -26,7 +26,7 @@ public class RelTransacoesPeriodo extends EntidadeDominio{
     
     
     
-    public  Date formatData(String dataString) {
+    public Date formatData(String dataString) {
         Date dt;
         try {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
