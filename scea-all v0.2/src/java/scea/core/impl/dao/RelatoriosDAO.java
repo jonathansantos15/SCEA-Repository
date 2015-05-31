@@ -18,7 +18,7 @@ import scea.dominio.modelo.Transacao;
 
 public class RelatoriosDAO extends AbstractJdbcDAO{
 	public RelatoriosDAO() {
-		super("tb_produto", "id_produto");		
+		super("tb_transacao", "id_transacao");		
 	}
 	
 	
@@ -29,52 +29,31 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		String sql=null;
 		
                 if(entidade instanceof RelTransacoesPeriodo){
-			sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)";
-		}
+			sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN date('20150101') AND date('20151201') GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                }
                 
-		
-		
-		
-	//	else if(produto.getId() == null && produto.getNome() != null ){
-			//System.out.println("\n\n\n\n\n\n\n\n\n\n terceiro  \n\n\n\n\n\n\n\n");
-			//sql = "SELECT * FROM tb_produto   JOIN tb_tipodeproduto    USING(id_tipodeproduto) JOIN tb_fornecedor   USING(id_fornecedor) WHERE   nome like '"+produto.getNome()+"%' ORDER BY id_produto";
-          //                sql = "SELECT * FROM tb_produto p JOIN tb_tipodeproduto  t USING(id_tipodeproduto) JOIN tb_fornecedor f USING(id_fornecedor) WHERE p.nome like '"+produto.getNome()+"%' ORDER BY p.id_produto"; 
-           //     }
+	
 		
 	try {
 		openConnection();
 		pst = connection.prepareStatement(sql);
-		
-		pst.setDate(1, relTransPeriodo.getDtInicial().getTime());
-                pst.setDate(2, relTransPeriodo.getDtFinal().getTime());
-		
+		//new java.sql.Date(funcionario.getDataAdmissao().getTime())
+		//pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
+                //pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+		//pst.setString(1, relTransPeriodo.getDtInicial());
+                //pst.setString(2, relTransPeriodo.getDtFinal());
+                
 		ResultSet rs = pst.executeQuery();
-		List<EntidadeDominio> produtos = new ArrayList<EntidadeDominio>();
+		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
 		while (rs.next()) {
-                Produto p = new Produto();
-			
-			
-			p.setId(rs.getInt("id_produto"));
-			p.setNome(rs.getString("nome"));
-			p.setQuantidade(rs.getInt("quantidade"));
-			p.setValor(rs.getDouble("vlr"));
-			p.getFornecedor().setId((rs.getInt("id_fornecedor")));
-			p.getTipoDeProduto().setId(rs.getInt("id_tipodeproduto"));
-			p.getTipoDeProduto().setDescricao(rs.getString("descricao"));
-			p.getTipoDeProduto().setQtdeMax(rs.getInt("qtdeMax"));
-			p.getTipoDeProduto().setQtdeMin(rs.getInt("qtdeMin"));
-			p.getTipoDeProduto().setTipo((rs.getString("tipo")));
-			
-			p.getFornecedor().setId(rs.getInt("id_fornecedor"));
-			p.getFornecedor().setNome(rs.getString("nome"));
-			p.getFornecedor().setEmail(rs.getString("email"));
-			p.getFornecedor().setNomeFantasia(rs.getString("nome_fantasia"));
-			p.getFornecedor().setRazaoSocial(rs.getString("rzsocial"));
-			p.getFornecedor().setCNPJ(rs.getString("cnpj"));
-						
-			produtos.add(p);
+                RelTransacoesPeriodo r = new RelTransacoesPeriodo();
+			r.setTransacao(rs.getString("transacao"));
+                        r.setQuantidade(rs.getInt("quantidade"));
+                        r.setMes(rs.getString("mes"));
+                        			
+			relatorio.add(r);
 		}
-		return produtos;
+		return relatorio;
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}

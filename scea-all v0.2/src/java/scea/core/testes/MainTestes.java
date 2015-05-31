@@ -1,20 +1,21 @@
 package scea.core.testes;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import scea.core.aplicacao.EmailAplicacao;
-
-import scea.dominio.modelo.Acesso;
-import scea.dominio.modelo.EntidadeDominio;
-import scea.dominio.modelo.Fornecedor;
-import scea.dominio.modelo.Produto;
-import scea.dominio.modelo.TipoDeProduto;
-import scea.dominio.modelo.Transacao;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
+import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
 import scea.core.impl.controle.Fachada;
 import scea.core.impl.controle.FachadaTransacao;
+import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.negocio.SimularEstoque;
 import scea.core.impl.negocio.ValidarAcesso;
@@ -27,9 +28,16 @@ import scea.core.testes.testesDAO.testeDAODFornecedor;
 import scea.core.testes.testesDAO.testeDAOProduto;
 import scea.core.testes.testesDAO.testeValidadorLimiteEntrada;
 import scea.core.testes.testesDAO.testeValidadorLimiteSaida;
+import scea.dominio.modelo.Acesso;
+import scea.dominio.modelo.EntidadeDominio;
+import scea.dominio.modelo.Fornecedor;
+import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.Simulacao;
+import scea.dominio.modelo.TipoDeProduto;
+import scea.dominio.modelo.Transacao;
 
 public class MainTestes {
+        public static Resultado resultado;
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
@@ -43,17 +51,62 @@ public class MainTestes {
                 //testeRelatorioInicialFachada();
                 //ValidarExistenciaFornece();
                 //testeValidarDadosProduto();
-           //     testeValidarExistenciaTipo();
-            
-            testeDeveEnviarEmail();
-		//teste
-		
-	//	
-	
-	//Fornecedor f = new Fornecedor();
-	//f.set
-             
+                //testeValidarExistenciaTipo();
+                //testeDeveEnviarEmail();
+                testeRelatorioTransaPeriodo();
+                //testeconvercaodata();
 	}//MAIN
+        
+        public static void testeconvercaodata(){
+                Calendar c = Calendar.getInstance();
+		Date data = c.getTime();
+		DateFormat f = DateFormat.getDateInstance();
+		
+		Date data2;
+            try {
+                data2 = f.parse("12/01/1995");
+                System.out.println(data2);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println("Data formatada: "+sdf.format(data));
+                
+                System.out.println("Data convertida: "+sdf.parse("02/08/1970"));
+            } catch (ParseException ex) {
+                Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+		
+		
+		
+		//Converte Objetos
+		
+
+
+        }
+        
+        public static void testeRelatorioTransaPeriodo(){
+            RelatoriosDAO dao = new RelatoriosDAO();
+            RelTransacoesPeriodo r = new RelTransacoesPeriodo();
+            resultado = new Resultado();
+            
+            String dtIni = "20150101";
+            String dtFim = "20151201";
+            r.setDtInicial(dtIni);
+            r.setDtFinal(dtFim);
+            
+            resultado.setEntidades(dao.consultar(r));
+            
+            for(EntidadeDominio e: resultado.getEntidades())
+            {
+                RelTransacoesPeriodo s = (RelTransacoesPeriodo)e;
+                System.out.println(s.getTransacao());
+                System.out.println(s.getQuantidade());
+                System.out.println(s.getMes());
+            }
+            System.out.println("passou");
+
+            
+            
+            
+        }
         
         public static void testeDeveEnviarEmail(){
             EmailAplicacao emailEnviado = new EmailAplicacao();

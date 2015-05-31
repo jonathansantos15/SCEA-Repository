@@ -7,6 +7,7 @@
 package scea.core.aplicacao.relatorio;
 
 import java.util.Date;
+
 import scea.dominio.modelo.EntidadeDominio;
 
 /**
@@ -14,8 +15,8 @@ import scea.dominio.modelo.EntidadeDominio;
  * @author Felipe
  */
 public class RelTransacoesPeriodo extends EntidadeDominio{
-    private Date dtInicial;           // Operação
-    private Date dtFinal;             // Qde
+    private String dtInicial;           // Operação
+    private String dtFinal;             // Qde
     private String Transacao;                 // Mes do intervalo
     private int quantidade;
     private String mes;
@@ -23,28 +24,28 @@ public class RelTransacoesPeriodo extends EntidadeDominio{
     /**
      * @return the dtInicil
      */
-    public Date getDtInicial() {
+    public String getDtInicial() {
         return dtInicial;
     }
 
     /**
      * @param dtInicil the dtInicil to set
      */
-    public void setDtInicial(Date dtInicil) {
+    public void setDtInicial(String dtInicil) {
         this.dtInicial = dtInicil;
     }
 
     /**
      * @return the dtFinal
      */
-    public Date getDtFinal() {
+    public String getDtFinal() {
         return dtFinal;
     }
 
     /**
      * @param dtFinal the dtFinal to set
      */
-    public void setDtFinal(Date dtFinal) {
+    public void setDtFinal(String dtFinal) {
         this.dtFinal = dtFinal;
     }
 
