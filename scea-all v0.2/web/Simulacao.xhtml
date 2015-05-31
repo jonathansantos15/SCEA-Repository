@@ -27,6 +27,7 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset>
+                    
                     <p:toolbar>
                         <f:facet name="left">
                             <p:commandButton value="Consultar" action="#{simulacaoBean.consultar()}" update="table"/>
@@ -34,16 +35,23 @@
                             <p:commandButton value="Simular Estoque" action="#{simulacaoBean.simularEstoque()}" update="mensagens,avisos"/>
                         </f:facet>
                     </p:toolbar>
+                    
                     <p:messages id="mensagens" showDetail="true" />
                     <p:growl id="avisos" showDetail="true" life="3000" />
+                    
                     <p:dataTable id="table" value = "#{simulacaoBean.simulacoes}"  selectionMode="single" selection="#{simulacaoBean.simulacaoSelecionada}" rowKey="#{s.id}" var="s">
                         <p:ajax event="rowSelect" listener="#{simulacaoBean.pegar}"  />
                         <p:column headerText="ID"> #{s.id} </p:column>
                         <p:column headerText="Transação"> #{s.tipoDeTransacao} </p:column>
                         <p:column headerText="Quantidade"> #{s.qtdeItens} </p:column>
                         <p:column headerText="Produto"> #{s.produto.id} </p:column>
-                        <p:column > <p:commandButton action="#{simulacaoBean.salvarTransacao()}" value="Realizar Transação" update=":form:avisos, :form:mensagens"/> </p:column>
+                        <p:column headerText="Nome do Produto">  #{s.produto.nome}</p:column>
                     </p:dataTable>
+                    <center>
+                        <br/>
+                        <br/>
+                        <p:commandButton style="width: 200px; height: 30px" action="#{simulacaoBean.salvarTransacao()}" value="Realizar Transação" update=":form:avisos, :form:mensagens"/>
+                    </center>
                 </h:form>
             </h:body>
         </ui:define>
