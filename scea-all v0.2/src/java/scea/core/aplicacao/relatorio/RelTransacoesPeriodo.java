@@ -6,8 +6,10 @@
 
 package scea.core.aplicacao.relatorio;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import scea.dominio.modelo.EntidadeDominio;
 
 /**
@@ -15,40 +17,28 @@ import scea.dominio.modelo.EntidadeDominio;
  * @author Felipe
  */
 public class RelTransacoesPeriodo extends EntidadeDominio{
-    private String dtInicial;           // Operação
-    private String dtFinal;             // Qde
+    private Date dtInicial;           // Operação
+    private Date dtFinal;             // Qde
     private String Transacao;                 // Mes do intervalo
     private int quantidade;
     private String mes;
-
-    /**
-     * @return the dtInicil
-     */
-    public String getDtInicial() {
-        return dtInicial;
+    
+    
+    
+    
+    public  Date formatData(String dataString, String formato) {
+        Date dt;
+        try {
+            DateFormat df = new SimpleDateFormat(formato);
+            dt = df.parse(dataString);
+            return dt;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    return null;
     }
 
-    /**
-     * @param dtInicil the dtInicil to set
-     */
-    public void setDtInicial(String dtInicil) {
-        this.dtInicial = dtInicil;
-    }
-
-    /**
-     * @return the dtFinal
-     */
-    public String getDtFinal() {
-        return dtFinal;
-    }
-
-    /**
-     * @param dtFinal the dtFinal to set
-     */
-    public void setDtFinal(String dtFinal) {
-        this.dtFinal = dtFinal;
-    }
-
+   
     /**
      * @return the Transacao
      */
@@ -89,6 +79,34 @@ public class RelTransacoesPeriodo extends EntidadeDominio{
      */
     public void setMes(String mes) {
         this.mes = mes;
+    }
+
+    /**
+     * @return the dtInicial
+     */
+    public Date getDtInicial() {
+        return dtInicial;
+    }
+
+    /**
+     * @param dtInicial the dtInicial to set
+     */
+    public void setDtInicial(Date dtInicial) {
+        this.dtInicial = dtInicial;
+    }
+
+    /**
+     * @return the dtFinal
+     */
+    public Date getDtFinal() {
+        return dtFinal;
+    }
+
+    /**
+     * @param dtFinal the dtFinal to set
+     */
+    public void setDtFinal(Date dtFinal) {
+        this.dtFinal = dtFinal;
     }
     
     

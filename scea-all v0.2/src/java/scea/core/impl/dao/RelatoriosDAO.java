@@ -22,14 +22,15 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 	}
 	
 	
-	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+	public List<EntidadeDominio> consultarRelTransacoesPeriodo(EntidadeDominio entidade) {
 		PreparedStatement pst = null;
 		
 		RelTransacoesPeriodo relTransPeriodo = (RelTransacoesPeriodo)entidade;
 		String sql=null;
 		
                 if(entidade instanceof RelTransacoesPeriodo){
-			sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN date('20150101') AND date('20151201') GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                  sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                 }
                 
 	
@@ -38,8 +39,8 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		openConnection();
 		pst = connection.prepareStatement(sql);
 		//new java.sql.Date(funcionario.getDataAdmissao().getTime())
-		//pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
-                //pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+		pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
+                pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
 		//pst.setString(1, relTransPeriodo.getDtInicial());
                 //pst.setString(2, relTransPeriodo.getDtFinal());
                 
@@ -122,6 +123,11 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 
     @Override
     public void excluir(EntidadeDominio entidade) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

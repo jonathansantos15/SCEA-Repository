@@ -57,6 +57,12 @@ public class MainTestes {
                 //testeconvercaodata();
 	}//MAIN
         
+        
+        public static void convertendoStringPData(){
+            
+        
+        }
+        
         public static void testeconvercaodata(){
                 Calendar c = Calendar.getInstance();
 		Date data = c.getTime();
@@ -87,21 +93,31 @@ public class MainTestes {
             RelTransacoesPeriodo r = new RelTransacoesPeriodo();
             resultado = new Resultado();
             
-            String dtIni = "20150101";
-            String dtFim = "20151201";
-            r.setDtInicial(dtIni);
-            r.setDtFinal(dtFim);
+            //String dtIni = "20140101";
+            //String dtFim = "20151201";
+            String dtIni = "01/01/2015";
+            String dtFim = "01/12/2015";
+            r.setDtInicial(r.formatData(dtIni, "dd/MM/yyyy"));
+            r.setDtFinal(r.formatData(dtFim, "dd/MM/yyyy"));
+            // System.out.println(r.getDtInicial().getTime());
+            // r.setDtFinal(dtFim);
             
-            resultado.setEntidades(dao.consultar(r));
+            //System.out.println(r.getDtInicial());
+            //System.out.println(r.getDtFinal());
+            
+            resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
             
             for(EntidadeDominio e: resultado.getEntidades())
             {
                 RelTransacoesPeriodo s = (RelTransacoesPeriodo)e;
-                System.out.println(s.getTransacao());
-                System.out.println(s.getQuantidade());
-                System.out.println(s.getMes());
+                System.out.print("Transção: " + s.getTransacao() + " " +
+                "Quantidade: " + s.getQuantidade() + " " +
+                "Mês: " + s.getMes());
+                
+                System.out.println();
             }
-            System.out.println("passou");
+            
+            
 
             
             
