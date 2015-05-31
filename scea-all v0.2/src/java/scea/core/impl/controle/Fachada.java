@@ -17,11 +17,13 @@ import scea.dominio.modelo.Produto;
 import scea.dominio.modelo.TipoDeProduto;
 import scea.dominio.modelo.Transacao;
 import scea.core.aplicacao.Resultado;
+import scea.core.aplicacao.relatorio.RelTransacoesPeriodo;
 import scea.core.impl.dao.AcessoDAO;
 import scea.core.impl.dao.FornecedorDAO;
 import scea.core.impl.dao.SimulacaoDAO;
 import scea.core.impl.dao.TransacaoDAO;
 import scea.core.impl.dao.ProdutoDAO;
+import scea.core.impl.dao.RelatoriosDAO;
 import scea.core.impl.negocio.EnviarEmail;
 import scea.core.impl.negocio.SimularEstoque;
 import scea.core.impl.negocio.ValidaCampos;
@@ -290,67 +292,11 @@ private Map<String, IDAO> daos;
 	}
 
 	
-	/*
-	
-	@Override
-	public Resultado entrada(EntidadeDominio entidade)  {
-		Resultado resultado = new Resultado();
-		Transacao t = (Transacao) entidade;
-		
-		ValidarLimiteEntrada validador = new ValidarLimiteEntrada();
-		
-		//String msg = validador.processar(t);
-		resultado = validador.processar(t);
-		if(resultado.getMsg() == null)
-		{
-			// ira realizar a insercao na DAOTransacao
-			TransacaoDAO trDAO = new TransacaoDAO();
-			try {
-				trDAO.entrar(entidade);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//resultado = new ResultadoEstoque();
-			//resultado.setMsg(null);
-		}
-		
-		return resultado;
-		
-	}
-
-	@Override
-	public Resultado saida(EntidadeDominio entidade) {
-		Resultado resultado = new Resultado();
-		Transacao t = (Transacao) entidade;
-		
-		
-		ValidarLimiteSaida validador = new ValidarLimiteSaida();
-		
-		//String msg = validador.processar(t);
-		
-		//if(msg == null)
-		//{
-		resultado = validador.processar(t);
-		if(resultado.getMsg() == null)
-		{
-			// ira realizar a insercao na DAOTransacao
-			TransacaoDAO trDAO = new TransacaoDAO();
-			try {
-				trDAO.sair(entidade);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return resultado;
-	}
-*/
 
 	@Override
 	public Resultado simular(EntidadeDominio entidade) {
-		Resultado resultado = new Resultado();
+		//Resultado resultado = new Resultado();
+                 resultado = new Resultado();
 		Transacao t = (Transacao) entidade;
 		Produto p = t.getProduto();
 		
@@ -370,24 +316,50 @@ private Map<String, IDAO> daos;
 		
 		Acesso a = (Acesso) entidade;
 		ValidarAcesso validador = new ValidarAcesso();
-		Resultado r = validador.processar(a);
-		return r;
+		//Resultado r = validador.processar(a);
+		resultado = validador.processar(a);
+                return resultado;
 		}
 
         
         @Override
         public Resultado RelatorioInicial(EntidadeDominio entidade) {
 
-            Resultado r = new Resultado();
+            resultado = new Resultado();
             Produto a = (Produto) entidade;
 
             ProdutoDAO produtoDAO = new ProdutoDAO();
-            r.setEntidades(produtoDAO.consultarRelatorioInicial(entidade));
+            resultado.setEntidades(produtoDAO.consultarRelatorioInicial(entidade));
 
-            return r;
+            return resultado;
+        }
+   
+        
+        @Override
+        public Resultado enviarEmail(EntidadeDominio entidade) {
+
+            EmailAplicacao emailEnviado = (EmailAplicacao) entidade;
+            EnviarEmail validador = new EnviarEmail();
+            //Resultado r = new Resultado();
+            resultado = new Resultado();
+            //r = validador.processar(emailEnviado);
+            resultado = validador.processar(emailEnviado);
+        //return r;
+            return resultado;
+        }
+    
+    
+    
+        @Override
+        public Resultado transacoesPeriodo(EntidadeDominio entidade) {
+           RelatoriosDAO dao = new RelatoriosDAO();
+           RelTransacoesPeriodo r =  (RelTransacoesPeriodo)entidade;
+           resultado = new Resultado();        
+           resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
+           return resultado;
         }
         
-        
+   
         @Override
         public Resultado entrada(EntidadeDominio entidade) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -398,15 +370,8 @@ private Map<String, IDAO> daos;
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
-    @Override
-    public Resultado enviarEmail(EntidadeDominio entidade) {
+    
 
-       EmailAplicacao emailEnviado = (EmailAplicacao) entidade;
-       EnviarEmail validador = new EnviarEmail();
-       Resultado r = new Resultado();
-       
-       r = validador.processar(emailEnviado);
-       return r; 
-    }
+
 
 }

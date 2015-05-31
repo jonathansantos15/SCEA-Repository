@@ -24,8 +24,12 @@ public interface IFachada {
 	//Simulações
 	public Resultado simular(EntidadeDominio entidade); 
         
-        public Resultado RelatorioInicial(EntidadeDominio entidade);
-        
+       
+        //Email
         public Resultado enviarEmail(EntidadeDominio entidade);
+        
+        //Relatorio
+        public Resultado RelatorioInicial(EntidadeDominio entidade);
+        public Resultado transacoesPeriodo(EntidadeDominio entidade);
 	
 }

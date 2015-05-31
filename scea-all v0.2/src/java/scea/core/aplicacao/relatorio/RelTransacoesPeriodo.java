@@ -26,10 +26,10 @@ public class RelTransacoesPeriodo extends EntidadeDominio{
     
     
     
-    public  Date formatData(String dataString, String formato) {
+    public  Date formatData(String dataString) {
         Date dt;
         try {
-            DateFormat df = new SimpleDateFormat(formato);
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             dt = df.parse(dataString);
             return dt;
         } catch (ParseException e) {
