@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioEstoque;
 
 
 import scea.core.impl.dao.AbstractJdbcDAO;
@@ -82,8 +83,6 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
                 
                 sql ="SELECT  t.id_produto as 'idprod', p.nome as 'nomeprod', t.transacao as 'transacao', sum(t.quantidade) as 'quantidade', monthname(dt_transacao) as 'mes' FROM tb_transacao t JOIN tb_produto p USING(id_produto) WHERE dt_transacao BETWEEN ? AND ? GROUP BY t.id_produto, t.transacao, month(t.dt_transacao) ORDER BY month(t.dt_transacao)";	
                 
-                
-	
 		
 	try {
 		openConnection();
@@ -168,6 +167,54 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 	return null;
 
 	}
+        
+        
+        public List<EntidadeDominio> consultarRelArmazenamentoEstoque(EntidadeDominio entidade) {
+		PreparedStatement pst = null;
+		
+		EntidadeRelatorio relTransPeriodo = (EntidadeRelatorio)entidade;
+		String sql=null;
+		
+                //if(entidade instanceof EntidadeRelatorio){
+		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                  //sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                  sql = "SELECT sum(quantidade) as 'qtdeEstoque', sum(qtdeMax)as 'qtdeDiponivel', (sum(quantidade)/sum(qtdeMax))*100 as 'porcentagemOcupada' FROM tb_produto JOIN tb_tipodeproduto using(id_tipodeproduto) WHERE dt_transacao BETWEEN ? AND ? ";
+                //}
+                
+	
+		
+	try {
+		openConnection();
+		pst = connection.prepareStatement(sql);
+		//new java.sql.Date(funcionario.getDataAdmissao().getTime())
+		pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
+                pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+		//pst.setString(1, relTransPeriodo.getDtInicial());
+                //pst.setString(2, relTransPeriodo.getDtFinal());
+                
+		ResultSet rs = pst.executeQuery();
+		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
+		while (rs.next()) {
+                RelatorioEstoque r = new RelatorioEstoque();
+			
+                       // r.setTransacao(new Transacao());
+                       // r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
+                       // r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                    r.setQtdeDiponivel(rs.getInt("qtdeDiponivel"));
+                    r.setQtdeEstoque(rs.getInt("setQtdeEstoque"));
+                    r.setPorcentagemOcupada(rs.getFloat("PorcentagemOcupada"));
+                    r.setMes(rs.getString("mes"));
+                        			
+			relatorio.add(r);
+		}
+		return relatorio;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return null;
+
+	}
+
 
         
     @Override
