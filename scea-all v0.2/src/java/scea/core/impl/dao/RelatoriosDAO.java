@@ -178,7 +178,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
                 //if(entidade instanceof EntidadeRelatorio){
 		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                   //sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
-                  sql = "SELECT sum(quantidade) as 'qtdeEstoque', sum(qtdeMax)as 'qtdeDiponivel', (sum(quantidade)/sum(qtdeMax))*100 as 'porcentagemOcupada' FROM tb_produto JOIN tb_tipodeproduto using(id_tipodeproduto) WHERE dt_transacao BETWEEN ? AND ? ";
+                  sql = "SELECT sum(quantidade) as 'qtdeEstoque', sum(qtdeMax)as 'qtdeDiponivel', (sum(quantidade)/sum(qtdeMax))*100 as 'porcentagemOcupada' FROM tb_produto JOIN tb_tipodeproduto using(id_tipodeproduto) ";
                 //}
                 
 	
@@ -187,8 +187,8 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		openConnection();
 		pst = connection.prepareStatement(sql);
 		//new java.sql.Date(funcionario.getDataAdmissao().getTime())
-		pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
-                pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
+		//pst.setDate(1, new java.sql.Date(relTransPeriodo.getDtInicial().getTime()));
+                //pst.setDate(2, new java.sql.Date(relTransPeriodo.getDtFinal().getTime()));
 		//pst.setString(1, relTransPeriodo.getDtInicial());
                 //pst.setString(2, relTransPeriodo.getDtFinal());
                 
@@ -201,9 +201,9 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
                        // r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
                        // r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
                     r.setQtdeDiponivel(rs.getInt("qtdeDiponivel"));
-                    r.setQtdeEstoque(rs.getInt("setQtdeEstoque"));
+                    r.setQtdeEstoque(rs.getInt("QtdeEstoque"));
                     r.setPorcentagemOcupada(rs.getFloat("PorcentagemOcupada"));
-                    r.setMes(rs.getString("mes"));
+                    //r.setMes(rs.getString("mes"));
                         			
 			relatorio.add(r);
 		}

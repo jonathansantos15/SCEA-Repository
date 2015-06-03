@@ -130,31 +130,29 @@ private Map<String, IDAO> daos;
 	
 	
 	public Resultado salvar(EntidadeDominio entidade) {
-		resultado = new Resultado();
-		String nmClasse = entidade.getClass().getName();	
-		
-		String msg = executarRegras(entidade, "SALVAR");
-		
-		
-		if(msg == null){
-			IDAO dao = daos.get(nmClasse);
-			try {
-				dao.salvar(entidade);
-				List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-				entidades.add(entidade);
-				resultado.setEntidades(entidades);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Nao foi possivel realizar o registro!");
-				
-			}
-		}else{
-			resultado.setMsg(msg);
-					
-			
-		}
-		
-		return resultado;
+            resultado = new Resultado();
+            String nmClasse = entidade.getClass().getName();	
+
+            String msg = executarRegras(entidade, "SALVAR");
+
+            if(msg == null){
+                IDAO dao = daos.get(nmClasse);
+                try {
+                    dao.salvar(entidade);
+                    List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
+                    entidades.add(entidade);
+                    resultado.setEntidades(entidades);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    resultado.setMsg("Nao foi possivel realizar o registro!");				
+                }
+            }else{
+                resultado.setMsg(msg);
+
+
+            }
+
+            return resultado;
 	}
 
 	
@@ -360,13 +358,21 @@ private Map<String, IDAO> daos;
         
         @Override
         public Resultado transacoesProdPeriodo(EntidadeDominio entidade) {
-           RelatoriosDAO dao = new RelatoriosDAO();
-           EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
-           resultado = new Resultado();        
-           resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
-           return resultado;
+            RelatoriosDAO dao = new RelatoriosDAO();
+            EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
+            resultado = new Resultado();        
+            resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
+            return resultado;
         }
         
+        @Override
+        public Resultado relatorioEstoque(EntidadeDominio entidade) {
+            RelatoriosDAO dao = new RelatoriosDAO();
+            EntidadeRelatorio r =  (EntidadeRelatorio)entidade;
+            resultado = new Resultado();        
+            resultado.setEntidades(dao.consultarRelArmazenamentoEstoque(r));
+            return resultado;
+        }
         
         @Override
         public Resultado entrada(EntidadeDominio entidade) {
@@ -377,6 +383,8 @@ private Map<String, IDAO> daos;
         public Resultado saida(EntidadeDominio entidade) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
+
 
    
 

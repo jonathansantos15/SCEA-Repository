@@ -13,6 +13,7 @@ import scea.core.aplicacao.EmailAplicacao;
 import scea.core.aplicacao.Estoque;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioEstoque;
 import scea.core.impl.controle.Fachada;
 import scea.core.impl.controle.FachadaTransacao;
 import scea.core.impl.dao.RelatoriosDAO;
@@ -60,9 +61,52 @@ public class MainTestes {
         //testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
-
+        //testeRelatorioEstoqueDAO();
+        //testeRelatorioEstoqueFachada();
     }//MAIN
 
+    
+    public static void testeRelatorioEstoqueFachada() {
+        fachada = new Fachada();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        resultado = new Resultado();
+
+        rel.setDtInicial("01/03/2015");
+        rel.setDtFinal(("31/04/2015"));
+        resultado = fachada.relatorioEstoque(rel);
+
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            RelatorioEstoque s = (RelatorioEstoque) e;
+            System.out.print(
+                    "Quantidade Ocupada"+s.getQtdeEstoque()+" "
+                    +"Quantidade Disponivel"+s.getQtdeDiponivel() + " "
+                    +"Pct ocp"+ Math.floor(s.getPorcentagemOcupada())+ " "
+                   );
+            System.out.println();
+        }
+    }//testeRelatorioEstoqueFachada
+    
+    
+    
+    public static void testeRelatorioEstoqueDAO() {
+        RelatoriosDAO dao = new RelatoriosDAO();
+        EntidadeRelatorio r = new EntidadeRelatorio();
+        resultado = new Resultado();
+        r.setDtInicial("01/03/2015");
+        r.setDtFinal("31/12/2015");
+        resultado.setEntidades(dao.consultarRelArmazenamentoEstoque(r));
+
+        for (EntidadeDominio e : resultado.getEntidades()) {
+            RelatorioEstoque s = (RelatorioEstoque) e;
+            System.out.print(
+                    "Quantidade Ocupada"+s.getQtdeEstoque()+" "
+                    +"Quantidade Disponivel"+s.getQtdeDiponivel() + " "
+                    +"Pct ocp"+ Math.floor(s.getPorcentagemOcupada())+ " "
+                   );
+            System.out.println();
+        }
+    }//testeRelatorioProdPeriodoDAO
+        
   
     
     public static void testeRelatorioTransacaoProdPeriodoFachada() {
