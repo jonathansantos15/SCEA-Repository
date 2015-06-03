@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package scea.web.beans;
+package scea.web.beans.Builder;
 
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -17,21 +17,14 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+import scea.web.beans.Builder.*;
 
-
-@ManagedBean ( name = "graficoBean")
-public class GraficoBean implements Serializable{
+public class GraficoLinhaBuilder implements Serializable{
     
-    private LineChartModel graficoLinha;
+    private LineChartModel graficoLinha = new LineChartModel();
     
-    @PostConstruct
-    public void init() {
-        initModeloLinear();
-    }
-
-
-     private void initModeloLinear() {
-        graficoLinha = new LineChartModel();
+     public GraficoLinhaBuilder  initModelo() {
+        
         LineChartSeries series1 = new LineChartSeries();
         series1.setLabel("Entrada: Caneta Preta");
         graficoLinha.setLegendPosition("e");
@@ -54,16 +47,25 @@ public class GraficoBean implements Serializable{
  
         graficoLinha.addSeries(series1);
         graficoLinha.addSeries(series2);
+        return this;
+     }
          
-        graficoLinha.setTitle("Entrada e Saída de N Produtos em um Periodo X");
-        graficoLinha.setZoom(true);
-        graficoLinha.getAxis(AxisType.Y).setLabel("Número Total de Entradas e Saídas");
+    public GraficoLinhaBuilder informacoesGrafico()
+    {
+    graficoLinha.setTitle("Entrada e Saída de N Produtos em um Periodo X");
+    graficoLinha.setZoom(true);
+    graficoLinha.getAxis(AxisType.Y).setLabel("Número Total de Entradas e Saídas");
+    return this;
+    }
+
+    public GraficoLinhaBuilder alocarEixos()
+    {
         DateAxis axis = new DateAxis("Período Selecionado");
         axis.setTickAngle(-50);
         axis.setMax("2014-02-01");
-        axis.setTickFormat("%b %#d, %y");
-         
+        axis.setTickFormat("%b %#d, %y");    
         graficoLinha.getAxes().put(AxisType.X, axis);
+        return this;
     }
      
     
