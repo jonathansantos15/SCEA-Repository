@@ -32,7 +32,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		
                 if(entidade instanceof EntidadeRelatorio){
 		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
-                  sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                  sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', dt_transacao ,monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                 }
                 
 	
@@ -53,9 +53,9 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 			r.setTransacao(new Transacao());
                         r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
                         r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                        r.getTransacao().setDtCadastro(rs.getDate("dt_transacao"));
                         
-                        //r.setNmTransacao(rs.getString("transacao"));
-                        //r.setQuantidade(rs.getInt("quantidade"));
+                        
                         r.setMes(rs.getString("mes"));
                         r.setTituloEixoX("Período Selecionado");
                         r.setTituloEixoY("Quantidade Total de Entradas e Saídas");
