@@ -17,7 +17,7 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
  */
 
 @ManagedBean ( name = "graficoEntradaSaidaBean")
-public class GraficoEntradaBean {
+public class GraficoTransacoesBean {
     private EntidadeRelatorio relatorio;
     
     public EntidadeRelatorio createRelatorio()
