@@ -6,10 +6,13 @@
 
 package scea.web.beans;
 
+import java.util.Calendar;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.LineChartModel;
+import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
 import scea.web.beans.Builder.GraficoLinhaBuilder;
+import scea.web.beans.Builder.GraficoTransacaoBuilder;
 
 /**
  *
@@ -17,23 +20,43 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
  */
 
 @ManagedBean ( name = "graficoTransacoesBean")
-public class GraficoTransacoesBean {
+public class GraficoTransacoesBean extends EntidadeDominioBean{
     private EntidadeRelatorio relatorio;
-    private boolean carrega = false;
+
+    public void atribuiDatas(){
+        relatorio = new EntidadeRelatorio();
+        Calendar c = Calendar.getInstance();  
+        relatorio.setDtInicial(c.getTime());
+        relatorio.setDtFinal(c.getTime());
+        
+    }
+    
+    
+    public Resultado consultadadosRelatorio(){
+        Resultado r = new Resultado();
+        r = (fachada.transacoesPeriodo(createRelatorio()));
+        return r;
+    }
+    
+    
     
     public EntidadeRelatorio createRelatorio()
     {
         EntidadeRelatorio rel = new EntidadeRelatorio();
-        getRelatorio().setDtInicial(getRelatorio().getDtInicial());
-        getRelatorio().setDtFinal(getRelatorio().getDtFinal());   
-        return getRelatorio();
+        //getRelatorio().setDtInicial(getRelatorio().getDtInicial());
+        //getRelatorio().setDtFinal(getRelatorio().getDtFinal());   
+        rel.setDtFinal(getRelatorio().getDtFinal());
+        rel.setDtInicial(getRelatorio().getDtInicial());
+        return rel;
     }
     
     public LineChartModel initGrafico()
     {
-        carrega = true;
+       EntidadeRelatorio rel = createRelatorio();
+       
         
-        GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
+        GraficoTransacaoBuilder grafico;
+        grafico = new GraficoTransacaoBuilder(consultadadosRelatorio())
                 .initModelo()
                 .informacoesGrafico()
                 .alocarEixos();
@@ -53,20 +76,6 @@ public class GraficoTransacoesBean {
      */
     public void setRelatorio(EntidadeRelatorio relatorio) {
         this.relatorio = relatorio;
-    }
-
-    /**
-     * @return the carrega
-     */
-    public boolean isCarrega() {
-        return carrega;
-    }
-
-    /**
-     * @param carrega the carrega to set
-     */
-    public void setCarrega(boolean carrega) {
-        this.carrega = carrega;
     }
     
 }

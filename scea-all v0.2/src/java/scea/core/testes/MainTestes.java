@@ -63,6 +63,7 @@ public class MainTestes {
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
         //testeRelatorioEstoqueFachada();
+        testedia();
     }//MAIN
 
     
@@ -87,6 +88,14 @@ public class MainTestes {
     }//testeRelatorioEstoqueFachada
     
     
+    
+    
+    public static void testedia(){
+        Calendar c = Calendar.getInstance();    
+        //DateFormat df  = new SimpleDateFormat("dd/MM/yyyy");  
+        System. out.println("m dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System. out.println("Maior dia:" + c.getActualMaximum(Calendar.DAY_OF_MONTH));
+    }
     
     public static void testeRelatorioEstoqueDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
