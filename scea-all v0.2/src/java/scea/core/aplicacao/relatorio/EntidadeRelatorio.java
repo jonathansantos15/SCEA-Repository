@@ -20,25 +20,9 @@ import scea.dominio.modelo.Transacao;
 public class EntidadeRelatorio extends EntidadeDominio{
     private Date dtInicial;           // Operação
     private Date dtFinal;             // Qde
-    //private String nmTransacao;                 // Mes do intervalo
-    //private int quantidade;
     private String mes;
     private Transacao transacao;
     
-    
-    
-    
-    public Date formatData(String dataString) {
-        Date dt;
-        try {
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            dt = df.parse(dataString);
-            return dt;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    return null;
-    }
 
 
     /**
@@ -68,6 +52,19 @@ public class EntidadeRelatorio extends EntidadeDominio{
     public void setDtInicial(Date dtInicial) {
         this.dtInicial = dtInicial;
     }
+    
+    public void setDtInicial(String dtInicial) {
+        //this.dtInicial = dtInicial;
+        Date dt;
+        try {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            dt = df.parse(dtInicial);
+            //return dt;
+            this.dtInicial = dt;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @return the dtFinal
@@ -83,6 +80,18 @@ public class EntidadeRelatorio extends EntidadeDominio{
         this.dtFinal = dtFinal;
     }
 
+    public void setDtFinal(String dtFinal){
+     Date dt;
+        try {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            dt = df.parse(dtFinal);
+            //return dt;
+            this.dtFinal = dt;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * @return the transacao
      */

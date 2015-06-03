@@ -56,11 +56,11 @@ public class MainTestes {
         //testeValidarExistenciaTipo();
         //testeDeveEnviarEmail();
         //testeconvercaodata();
-        //testeRelatorioTransaPeriodoDAO();
-        //testeRelatorioTransacaoPeriodoFachada();
+        testeRelatorioTransaPeriodoDAO();
+        testeRelatorioTransacaoPeriodoFachada();
         
-        //testeRelatorioPeriodoProdutoDAO();
-        //testeRelatorioTransacaoProdPeriodoFachada();
+        testeRelatorioPeriodoProdutoDAO();
+        testeRelatorioTransacaoProdPeriodoFachada();
         
     }//MAIN
 
@@ -72,8 +72,8 @@ public class MainTestes {
             EntidadeRelatorio rel = new EntidadeRelatorio();
             resultado = new Resultado();
 
-            rel.setDtInicial(rel.formatData("01/03/2015"));
-            rel.setDtFinal(rel.formatData("31/04/2015"));
+            rel.setDtInicial("01/03/2015");
+            rel.setDtFinal(("31/04/2015"));
             resultado = fachada.transacoesProdPeriodo(rel);
 
             for (EntidadeDominio e : resultado.getEntidades()) {
@@ -96,8 +96,8 @@ public class MainTestes {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
         resultado = new Resultado();
-        r.setDtInicial(r.formatData("01/03/2015"));
-        r.setDtFinal(r.formatData("31/12/2015"));
+        r.setDtInicial("01/03/2015");
+        r.setDtFinal("31/12/2015");
         
         resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
 
@@ -121,8 +121,8 @@ public class MainTestes {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
         
-        rel.setDtInicial(rel.formatData("01/03/2015"));
-        rel.setDtFinal(rel.formatData("31/04/2015"));
+        rel.setDtInicial(("01/03/2015"));
+        rel.setDtFinal(("31/04/2015"));
         resultado = fachada.transacoesPeriodo(rel);
         
         for (EntidadeDominio e : resultado.getEntidades()) {
@@ -141,8 +141,8 @@ public class MainTestes {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
         resultado = new Resultado();
-        r.setDtInicial(r.formatData("01/03/2015"));
-        r.setDtFinal(r.formatData("31/12/2015"));
+        r.setDtInicial(("01/03/2015"));
+        r.setDtFinal(("31/12/2015"));
         
         resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
 
