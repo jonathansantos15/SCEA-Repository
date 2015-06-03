@@ -16,20 +16,23 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
  * @author Main User
  */
 
-@ManagedBean ( name = "graficoEntradaSaidaBean")
+@ManagedBean ( name = "graficoTransacoesBean")
 public class GraficoTransacoesBean {
     private EntidadeRelatorio relatorio;
+    private boolean carrega = false;
     
     public EntidadeRelatorio createRelatorio()
     {
         EntidadeRelatorio rel = new EntidadeRelatorio();
-        relatorio.setDtInicial(getRelatorio().getDtInicial());
-        relatorio.setDtFinal(getRelatorio().getDtFinal());   
-        return relatorio;
+        getRelatorio().setDtInicial(getRelatorio().getDtInicial());
+        getRelatorio().setDtFinal(getRelatorio().getDtFinal());   
+        return getRelatorio();
     }
     
     public LineChartModel initGrafico()
     {
+        carrega = true;
+        
         GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
                 .initModelo()
                 .informacoesGrafico()
@@ -50,6 +53,20 @@ public class GraficoTransacoesBean {
      */
     public void setRelatorio(EntidadeRelatorio relatorio) {
         this.relatorio = relatorio;
+    }
+
+    /**
+     * @return the carrega
+     */
+    public boolean isCarrega() {
+        return carrega;
+    }
+
+    /**
+     * @param carrega the carrega to set
+     */
+    public void setCarrega(boolean carrega) {
+        this.carrega = carrega;
     }
     
 }
