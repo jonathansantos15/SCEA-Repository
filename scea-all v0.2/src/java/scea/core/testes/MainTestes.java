@@ -62,8 +62,8 @@ public class MainTestes {
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
-        //testeRelatorioEstoqueFachada();
-        testedia();
+        testeRelatorioEstoqueFachada();
+        //testedia();
     }//MAIN
 
     

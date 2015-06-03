@@ -7,6 +7,8 @@
 package scea.web.beans.Builder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.model.chart.Axis;
@@ -17,54 +19,78 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
+import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioESEstoque;
+import scea.dominio.modelo.EntidadeDominio;
 import scea.web.beans.Builder.*;
 
 public class GraficoLinhaBuilder implements Serializable{
     
     private LineChartModel graficoLinha = new LineChartModel();
     
-     public GraficoLinhaBuilder  initModelo() {
+     public GraficoLinhaBuilder  initModelo(List<EntidadeDominio> entidades) {
         
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Entrada: Caneta Preta");
-        graficoLinha.setLegendPosition("e");
-        series1.set("2014-01-01", 51);
-        series1.set("2014-01-06", 22);
-        series1.set("2014-01-12", 65);
-        series1.set("2014-01-18", 74);
-        series1.set("2014-01-24", 24);
-        series1.set("2014-01-30", 51);
- 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Saída: Caneta Azul");
- 
-        series2.set("2014-01-01", 32);
-        series2.set("2014-01-06", 73);
-        series2.set("2014-01-12", 24);
-        series2.set("2014-01-18", 12);
-        series2.set("2014-01-24", 74);
-        series2.set("2014-01-30", 62);
- 
-        graficoLinha.addSeries(series1);
-        graficoLinha.addSeries(series2);
+         List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
+         }
+        
+        if(listRelatorios.size() != 0)
+        {
+            for(int i=0; i <= listRelatorios.size(); i++)
+            {
+                LineChartSeries series = new LineChartSeries();
+                //series1.setLabel();
+                graficoLinha.setLegendPosition("e");
+                series.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                
+                graficoLinha.addSeries(series);
+            }
+        }
         return this;
      }
          
-    public GraficoLinhaBuilder informacoesGrafico()
+    public GraficoLinhaBuilder informacoesGrafico(List<EntidadeDominio> entidades)
     {
-    graficoLinha.setTitle("Entrada e Saída de N Produtos em um Periodo X");
-    graficoLinha.setZoom(true);
-    graficoLinha.getAxis(AxisType.Y).setLabel("Número Total de Entradas e Saídas");
-    return this;
+        List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
+         }
+        
+        if(listRelatorios.size() != 0)
+        {
+            graficoLinha.setTitle(listRelatorios.get(0).getTituloRelatorio());
+            graficoLinha.setZoom(true);
+            graficoLinha.setAnimate(true);
+            graficoLinha.getAxis(AxisType.Y).setLabel(listRelatorios.get(0).getTituloEixoY());
+            //graficoLinha.getAxis(AxisType.X).setLabel(listRelatorios.get(0).getTituloEixoX());
+        }
+        return this;
     }
 
-    public GraficoLinhaBuilder alocarEixos()
+    public GraficoLinhaBuilder alocarEixos(List<EntidadeDominio> entidades)
     {
-        DateAxis axis = new DateAxis("Período Selecionado");
-        axis.setTickAngle(-50);
-        axis.setMax("2014-02-01");
-        axis.setTickFormat("%b %#d, %y");    
-        graficoLinha.getAxes().put(AxisType.X, axis);
+        List<EntidadeRelatorio> listRelatorios = new ArrayList<EntidadeRelatorio>();
+         
+         for(EntidadeDominio e: entidades)
+         {
+             EntidadeRelatorio relatorio = (EntidadeRelatorio)e;
+             listRelatorios.add(relatorio);
+         }
+        
+        if(listRelatorios.size() != 0)
+        {
+            DateAxis axis = new DateAxis(listRelatorios.get(0).getTituloEixoX());
+            axis.setTickAngle(-50);
+            //axis.setTickFormat("%d %#b, %y");    
+            graficoLinha.getAxes().put(AxisType.X, axis);
+        }
         return this;
     }
      

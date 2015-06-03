@@ -22,6 +22,10 @@ public class EntidadeRelatorio extends EntidadeDominio{
     private Date dtFinal;             // Qde
     private String mes;
     private Transacao transacao;
+    private String TituloEixoX;
+    private String TituloEixoY;
+    private String TituloRelatorio;
+    private Date dataRetornada;
     
 
 
@@ -104,6 +108,62 @@ public class EntidadeRelatorio extends EntidadeDominio{
      */
     public void setTransacao(Transacao transacao) {
         this.transacao = transacao;
+    }
+
+    /**
+     * @return the TituloEixoX
+     */
+    public String getTituloEixoX() {
+        return TituloEixoX;
+    }
+
+    /**
+     * @param TituloEixoX the TituloEixoX to set
+     */
+    public void setTituloEixoX(String TituloEixoX) {
+        this.TituloEixoX = TituloEixoX;
+    }
+
+    /**
+     * @return the TituloEixoY
+     */
+    public String getTituloEixoY() {
+        return TituloEixoY;
+    }
+
+    /**
+     * @param TituloEixoY the TituloEixoY to set
+     */
+    public void setTituloEixoY(String TituloEixoY) {
+        this.TituloEixoY = TituloEixoY;
+    }
+
+    /**
+     * @return the TituloRelatorio
+     */
+    public String getTituloRelatorio() {
+        return TituloRelatorio;
+    }
+
+    /**
+     * @param TituloRelatorio the TituloRelatorio to set
+     */
+    public void setTituloRelatorio(String TituloRelatorio) {
+        this.TituloRelatorio = TituloRelatorio;
+    }
+
+    /**
+     * @return the dataRetornada
+     */
+    public Date getDataRetornada() {
+        return dataRetornada;
+    }
+
+    /**
+     * @param dataRetornada the dataRetornada to set
+     */
+    public void setDataRetornada(Date dataRetornada) {
+        this.dataRetornada = dataRetornada;
     }
     
     
