@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
+import scea.core.aplicacao.relatorio.RelatorioEstoque;
 
 
 import scea.core.impl.dao.AbstractJdbcDAO;
@@ -194,14 +195,15 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		ResultSet rs = pst.executeQuery();
 		List<EntidadeDominio> relatorio = new ArrayList<EntidadeDominio>();
 		while (rs.next()) {
-                EntidadeRelatorio r = new EntidadeRelatorio();
-			r.setTransacao(new Transacao());
-                        r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
-                        r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
-                        
-                        //r.setNmTransacao(rs.getString("transacao"));
-                        //r.setQuantidade(rs.getInt("quantidade"));
-                        r.setMes(rs.getString("mes"));
+                RelatorioEstoque r = new RelatorioEstoque();
+			
+                       // r.setTransacao(new Transacao());
+                       // r.getTransacao().setTipoDeTransacao(rs.getString("transacao"));
+                       // r.getTransacao().setQtdeDoTipo(rs.getInt("quantidade"));
+                    r.setQtdeDiponivel(rs.getInt("qtdeDiponivel"));
+                    r.setQtdeEstoque(rs.getInt("setQtdeEstoque"));
+                    r.setPorcentagemOcupada(rs.getFloat("PorcentagemOcupada"));
+                    r.setMes(rs.getString("mes"));
                         			
 			relatorio.add(r);
 		}

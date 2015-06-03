@@ -42,7 +42,7 @@ public class MainTestes {
     public static Fachada fachada;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
         //testeConexao();
         //testeTransacao
         //testeDAOProduto.testeCadastrarProduto();
@@ -56,75 +56,70 @@ public class MainTestes {
         //testeValidarExistenciaTipo();
         //testeDeveEnviarEmail();
         //testeconvercaodata();
-        testeRelatorioTransaPeriodoDAO();
-        testeRelatorioTransacaoPeriodoFachada();
-        
-        testeRelatorioPeriodoProdutoDAO();
-        testeRelatorioTransacaoProdPeriodoFachada();
-        
+        //testeRelatorioTransaPeriodoDAO();
+        //testeRelatorioTransacaoPeriodoFachada();
+        //testeRelatorioProdPeriodoDAO();
+        //testeRelatorioTransacaoProdPeriodoFachada();
+
     }//MAIN
 
+  
     
-    
-    
-        public static void testeRelatorioTransacaoProdPeriodoFachada(){
-            fachada = new Fachada();
-            EntidadeRelatorio rel = new EntidadeRelatorio();
-            resultado = new Resultado();
+    public static void testeRelatorioTransacaoProdPeriodoFachada() {
+        fachada = new Fachada();
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        resultado = new Resultado();
 
-            rel.setDtInicial("01/03/2015");
-            rel.setDtFinal(("31/04/2015"));
-            resultado = fachada.transacoesProdPeriodo(rel);
+        rel.setDtInicial("01/03/2015");
+        rel.setDtFinal(("31/04/2015"));
+        resultado = fachada.transacoesProdPeriodo(rel);
 
-            for (EntidadeDominio e : resultado.getEntidades()) {
+        for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print(
-                      
-                    "ID Produto: "+ s.getTransacao().getProduto().getId()  + " " +
-                    "Produto: "+ s.getTransacao().getProduto().getNome()   + " " +
-                    "Transção: " + s.getTransacao().getTipoDeTransacao()         + " " +
-                    "Quantidade: " + s.getTransacao().getQtdeDoTipo()      + " " +
-                    "Mês: " + s.getMes());
+                    "ID Produto: " + s.getTransacao().getProduto().getId() + " "
+                    + "Produto: " + s.getTransacao().getProduto().getNome() + " "
+                    + "Transção: " + s.getTransacao().getTipoDeTransacao() + " "
+                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
+                    + "Mês: " + s.getMes());
             System.out.println();
         }
+    }//testeRelatorioTransacaoProdPeriodoFachada
+
+
     
-        }
-    
-    
-    
-        public static void testeRelatorioPeriodoProdutoDAO() {
+    public static void testeRelatorioProdPeriodoDAO() {
         RelatoriosDAO dao = new RelatoriosDAO();
         EntidadeRelatorio r = new EntidadeRelatorio();
         resultado = new Resultado();
         r.setDtInicial("01/03/2015");
         r.setDtFinal("31/12/2015");
-        
+
         resultado.setEntidades(dao.consultarTransacoesProdPeriodo(r));
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print(
-                      
-                    "ID Produto: "+ s.getTransacao().getProduto().getId()  + " " +
-                    "Produto: "+ s.getTransacao().getProduto().getNome()   + " " +
-                    "Transção: " + s.getTransacao().getTipoDeTransacao()   + " " +
-                    "Quantidade: " + s.getTransacao().getQtdeDoTipo()      + " " +
-                    "Mês: " + s.getMes());
+                    "ID Produto: " + s.getTransacao().getProduto().getId() + " "
+                    + "Produto: " + s.getTransacao().getProduto().getNome() + " "
+                    + "Transção: " + s.getTransacao().getTipoDeTransacao() + " "
+                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
+                    + "Mês: " + s.getMes());
             System.out.println();
         }
+    }//testeRelatorioProdPeriodoDAO
 
-    }
     
     
-    public static void testeRelatorioTransacaoPeriodoFachada(){
+    public static void testeRelatorioTransacaoPeriodoFachada() {
         fachada = new Fachada();
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
-        
+
         rel.setDtInicial(("01/03/2015"));
         rel.setDtFinal(("31/04/2015"));
         resultado = fachada.transacoesPeriodo(rel);
-        
+
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
@@ -133,8 +128,8 @@ public class MainTestes {
 
             System.out.println();
         }
-    
-    }
+    }//testeRelatorioTransacaoPeriodoFachada
+
     
     
     public static void testeRelatorioTransaPeriodoDAO() {
@@ -143,20 +138,21 @@ public class MainTestes {
         resultado = new Resultado();
         r.setDtInicial(("01/03/2015"));
         r.setDtFinal(("31/12/2015"));
-        
+
         resultado.setEntidades(dao.consultarRelTransacoesPeriodo(r));
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
-            System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao()+ " "
+            System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
                     + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
                     + "Mês: " + s.getMes());
 
             System.out.println();
         }
+    }//testeRelatorioTransaPeriodoDAO
 
-    }
-
+    
+    
     public static void testeDeveEnviarEmail() {
         EmailAplicacao emailEnviado = new EmailAplicacao();
         emailEnviado.setAssunto("Teste Email");
@@ -166,46 +162,45 @@ public class MainTestes {
         Fachada f = new Fachada();
         Resultado r = f.enviarEmail(emailEnviado);
         System.out.println(r.getMsg());
-    }
+    }//testeDeveEnviarEmail
 
+    
+    
     public static void testeValidarExistenciaTipo() {
         Resultado r; //= new Resultado();
         ValidarExistenciaTipoDeProduto validador = new ValidarExistenciaTipoDeProduto();
         TipoDeProduto f = new TipoDeProduto();
         f.setId(1);
-
         r = validador.processar(f);
-        //if(r.getMsg() != null){
         System.out.println(r.getMsg());
-         //}
+    }//testeValidarExistenciaTipo
 
-    }
-
+    
+    
     public static void testeValidarExistenciaFornecedor() {
-        Resultado r; //= new Resultado();
+        Resultado r;
         ValidarExistenciaFornecedor validador = new ValidarExistenciaFornecedor();
         Fornecedor f = new Fornecedor();
         f.setId(1);
 
         r = validador.processar(f);
-        //if(r.getMsg() != null){
+
         System.out.println(r.getMsg());
-         //}
+    }//testeValidarExistenciaTipo
 
-    }
-
+    
+    
     public static void testeRelatorioInicialFachada() {
         Fachada f = new Fachada();
         Resultado r = new Resultado();
         r = f.RelatorioInicial(new Produto());
-
         for (EntidadeDominio e : r.getEntidades()) {
             System.out.println(e.getId());
-
         }
+    }//testeRelatorioInicialFachada
 
-    }
-
+    
+    
     public static void testeAcesso() {
         Fachada f = new Fachada();
         Acesso ac = new Acesso();
@@ -213,11 +208,11 @@ public class MainTestes {
         ac.setLogin("f");
         ac.setSenha("1");
         r = f.acessar(ac);
-
         System.out.println(r.getMsg());
+    }//testeAcesso
 
-    }
-
+    
+    
     public static void testVerificaFachadaParaSimulacao() {
         Fachada f = new Fachada();
 
@@ -238,8 +233,10 @@ public class MainTestes {
             System.out.println("ID:" + s2.getId() + " Data: " + s2.getDtTransacaoFutura() + " Quantidade: " + s2.getQtdeItens() + " Tipo de Transação: "
                     + s2.getTipoDeTransacao() + " ID PRODUTO " + s2.getProduto().getId());
         }
-    }
+    }//testVerificaFachadaParaSimulacao
 
+    
+    
     public static void testeValidarDadosProduto() {
         ValidarDadosProduto validador = new ValidarDadosProduto();
         Produto p = new Produto();
@@ -252,8 +249,10 @@ public class MainTestes {
         p.getFornecedor().setId(1);
         r = validador.processar(p);
         System.out.println(r.getMsg());
-    }
+    }//testeValidarDadosProduto
 
+    
+    
     public static void testeSalvarFachada() {
         Fachada f = new Fachada();
         Produto p = new Produto();
@@ -267,8 +266,10 @@ public class MainTestes {
         r = f.salvar(p);
 
         System.out.println(r.getMsg());
-    }
+    }//testeSalvarFachada
 
+    
+    
     public static void testeTransacao() {
         FachadaTransacao f = new FachadaTransacao();
         Produto p = new Produto();
@@ -287,7 +288,7 @@ public class MainTestes {
         Resultado r = f.entrada(ts);
 
         System.out.println();
-        ;
+
         if (r.getMsg() != null) {
             System.out.println(r.getMsg());
         } else {
@@ -301,8 +302,10 @@ public class MainTestes {
             System.out.println("FUTURA: " + ((Estoque) r.getEntidades().get(0)).getQtdeFutura());
             System.out.println("TENTATIVA: " + ((Estoque) r.getEntidades().get(0)).getQtdeTentativa());
         }
-    }
+    }//testeTransacao
 
+    
+    
     public static void testeConexao() {
         TesteConexao st = new TesteConexao();
         try {
@@ -316,8 +319,10 @@ public class MainTestes {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
+    }//testeConexao
 
+    
+    
     public static void testeSimulacao() throws SQLException {
         Simulacao s = new Simulacao();
         SimulacaoDAO sdao = new SimulacaoDAO();
@@ -337,8 +342,10 @@ public class MainTestes {
             System.out.println("ID:" + s2.getId() + " Data: " + s2.getDtTransacaoFutura() + " Quantidade: " + s2.getQtdeItens() + " Tipo de Transação: "
                     + s2.getTipoDeTransacao() + " ID PRODUTO " + s2.getProduto().getId());
         }
-    }
+    }//testeSimulacao
 
+    
+    
     public static void testeconvercaodata() {
         Calendar c = Calendar.getInstance();
         Date data = c.getTime();
@@ -355,8 +362,5 @@ public class MainTestes {
         } catch (ParseException ex) {
             Logger.getLogger(MainTestes.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-		//Converte Objetos
-    }
-
-}
+    }//testeconvercaodata
+}//MainTestes
