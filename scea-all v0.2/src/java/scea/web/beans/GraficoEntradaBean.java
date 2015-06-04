@@ -6,7 +6,9 @@
 
 package scea.web.beans;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.LineChartModel;
 import scea.core.aplicacao.Resultado;
 import scea.core.aplicacao.relatorio.EntidadeRelatorio;
@@ -23,30 +25,33 @@ import scea.web.beans.Builder.GraficoLinhaBuilder;
 @ManagedBean ( name = "graficoEntradaSaidaBean")
 public class GraficoEntradaBean {
     private EntidadeRelatorio relatorio;
-    
-    public EntidadeRelatorio createRelatorio()
-    {
-        EntidadeRelatorio rel = new EntidadeRelatorio();
-        relatorio.setDtInicial(getRelatorio().getDtInicial());
-        relatorio.setDtFinal(getRelatorio().getDtFinal());   
-        return relatorio;
-    }
-    
-    public LineChartModel initGrafico()
-    {
-        EntidadeRelatorio rel = new EntidadeRelatorio();
-        Resultado res = new Resultado();
+    private LineChartModel graficoRetornado;
 
-        rel.setDtInicial("01/03/2015");
-        rel.setDtFinal(("31/06/2015"));
-        Fachada fac = new Fachada();
-        res = fac.transacoesPeriodo(rel);
-        GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
-                .initModelo(res.getEntidades())
-                .informacoesGrafico(res.getEntidades())
-                .alocarEixos(res.getEntidades());
+      @PostConstruct
+      public void init() {
+         initGrafico();
+      }
+ 
+    public void initGrafico()
+    {
+        EntidadeRelatorio rel = new EntidadeRelatorio();
+        resultado = new Resultado();
+
+        rel.setDtInicial("01/01/2015");
+        rel.setDtFinal(("31/06/2016"));
+        fachada = new Fachada();
+        resultado = fachada.transacoesPeriodo(rel);
         
-        return grafico.getGraficoLinha();
+        GraficoLinhaBuilder grafico = new GraficoLinhaBuilder()
+                .initModelo(resultado.getEntidades())
+                .informacoesGrafico(resultado.getEntidades())
+                .alocarEixos(resultado.getEntidades());
+        setGraficoRetornado(grafico.getGraficoLinha());
+        
+
+    }
+    public LineChartModel teste(){
+        return null;
     }
 
     /**
@@ -62,5 +67,24 @@ public class GraficoEntradaBean {
     public void setRelatorio(EntidadeRelatorio relatorio) {
         this.relatorio = relatorio;
     }
+
+    /**
+     * @return the graficoRetornado
+     */
+    public LineChartModel getGraficoRetornado() {
+        return graficoRetornado;
+    }
+
+    /**
+     * @param graficoRetornado the graficoRetornado to set
+     */
+    public void setGraficoRetornado(LineChartModel graficoRetornado) {
+        this.graficoRetornado = graficoRetornado;
+    }
+
+    /**
+     * @return the grafico
+     */
+
     
 }

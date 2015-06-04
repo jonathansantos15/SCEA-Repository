@@ -32,7 +32,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
 		
                 if(entidade instanceof EntidadeRelatorio){
 		//sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN " + relTransPeriodo.getDtInicial() + " AND " + relTransPeriodo.getDtFinal() + " GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
-                  sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', monthname(dt_transacao) AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
+                  sql = "SELECT  transacao, sum(quantidade) AS 'quantidade', dt_transacao AS 'mes' FROM tb_transacao  WHERE dt_transacao BETWEEN ? AND ? GROUP BY transacao, month(dt_transacao) ORDER BY month(dt_transacao)"; 
                 }
                 
 	
@@ -57,10 +57,7 @@ public class RelatoriosDAO extends AbstractJdbcDAO{
                         //r.setNmTransacao(rs.getString("transacao"));
                         //r.setQuantidade(rs.getInt("quantidade"));
                         r.setMes(rs.getString("mes"));
-                        r.setTituloEixoX("Período Selecionado");
-                        r.setTituloEixoY("Quantidade Total de Entradas e Saídas");
-                        r.setTituloRelatorio("Total de Entradas e Saídas entre o período" + r.getDtInicial()
-                                + " á " + r.getDtFinal());
+                        
 			relatorio.add(r);
 		}
 		return relatorio;

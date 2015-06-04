@@ -26,7 +26,12 @@ import scea.web.beans.Builder.*;
 
 public class GraficoLinhaBuilder implements Serializable{
     
-    private LineChartModel graficoLinha = new LineChartModel();
+    private LineChartModel graficoLinha;
+    
+    public GraficoLinhaBuilder()
+    {
+        graficoLinha = new LineChartModel();
+    }
     
      public GraficoLinhaBuilder  initModelo(List<EntidadeDominio> entidades) {
         
@@ -40,15 +45,26 @@ public class GraficoLinhaBuilder implements Serializable{
         
         if(listRelatorios.size() != 0)
         {
-            for(int i=0; i <= listRelatorios.size(); i++)
+            ChartSeries entradas = new ChartSeries();
+            ChartSeries saidas = new ChartSeries();
+            entradas.setLabel("Total de Entradas");
+            saidas.setLabel("Total de Saídas");    
+            graficoLinha.setLegendPosition("se");
+            for(int i=0; i < listRelatorios.size(); i++)
             {
-                LineChartSeries series = new LineChartSeries();
-                //series1.setLabel();
-                graficoLinha.setLegendPosition("e");
-                series.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
                 
-                graficoLinha.addSeries(series);
+                if(listRelatorios.get(i).getTransacao().getTipoDeTransacao().equals("ENTRADA"))
+                {
+                    entradas.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                   
+                }else
+                {
+                    saidas.set(listRelatorios.get(i).getMes(), listRelatorios.get(i).getTransacao().getQtdeDoTipo());
+                    
+                }
             }
+             graficoLinha.addSeries(entradas);
+             graficoLinha.addSeries(saidas);
         }
         return this;
      }
@@ -66,10 +82,12 @@ public class GraficoLinhaBuilder implements Serializable{
         if(listRelatorios.size() != 0)
         {
             graficoLinha.setTitle(listRelatorios.get(0).getTituloRelatorio());
-            graficoLinha.setZoom(true);
+            //graficoLinha.setZoom(true);
             graficoLinha.setAnimate(true);
-            graficoLinha.getAxis(AxisType.Y).setLabel(listRelatorios.get(0).getTituloEixoY());
+            //graficoLinha.getAxis(AxisType.Y).setLabel(listRelatorios.get(0).getTituloEixoY());
             //graficoLinha.getAxis(AxisType.X).setLabel(listRelatorios.get(0).getTituloEixoX());
+            graficoLinha.setTitle("Total de Entradas e Saídas entre o período" + listRelatorios.get(0).getDtInicial()
+            + " á " + listRelatorios.get(0).getDtFinal());
         }
         return this;
     }
@@ -86,12 +104,12 @@ public class GraficoLinhaBuilder implements Serializable{
         
         if(listRelatorios.size() != 0)
         {
-            DateAxis axis = new DateAxis(listRelatorios.get(0).getTituloEixoX());
+            DateAxis axis = new DateAxis("Periodo");
             axis.setTickAngle(-50);
-            //axis.setTickFormat("%d %#b, %y");    
+            axis.setTickFormat("%B");
             graficoLinha.getAxes().put(AxisType.X, axis);
         }
-        return this;
+            return this;
     }
      
     
