@@ -58,8 +58,8 @@ public class GraficoTransacoesBean extends EntidadeDominioBean{
         GraficoTransacaoBuilder grafico;
         grafico = new GraficoTransacaoBuilder(consultadadosRelatorio())
                 .initModelo()
-                .informacoesGrafico()
-                .alocarEixos();
+                .informacoesGrafico();
+                //.alocarEixos();
         
         return grafico.getGraficoLinha();
     }

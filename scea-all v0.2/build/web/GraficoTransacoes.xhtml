@@ -18,8 +18,10 @@
                         <p:outputLabel for="final" value="Final:" />
                         <p:calendar id="final" value="#{graficoTransacoesBean.relatorio.dtFinal}" />     
                     </p:panelGrid>
+                    
                     <p:commandButton value="Submit"  action="#{graficoTransacoesBean.initGrafico()}" icon="ui-icon-check" />
-                </p:fieldset>
+                
+                    </p:fieldset>
                 <br/><br/><br/><br/><br/><br/>
                 
                     <p:chart type="line" model="#{graficoTransacoesBean.initGrafico()}" style="height:300px; "/>  

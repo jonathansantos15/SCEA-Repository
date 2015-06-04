@@ -58,11 +58,11 @@ public class MainTestes {
         //testeDeveEnviarEmail();
         //testeconvercaodata();
         //testeRelatorioTransaPeriodoDAO();
-        //testeRelatorioTransacaoPeriodoFachada();
+        testeRelatorioTransacaoPeriodoFachada();
         //testeRelatorioProdPeriodoDAO();
         //testeRelatorioTransacaoProdPeriodoFachada();
         //testeRelatorioEstoqueDAO();
-        testeRelatorioEstoqueFachada();
+        //testeRelatorioEstoqueFachada();
         //testedia();
     }//MAIN
 
@@ -169,14 +169,15 @@ public class MainTestes {
         EntidadeRelatorio rel = new EntidadeRelatorio();
         resultado = new Resultado();
 
-        rel.setDtInicial(("01/03/2015"));
-        rel.setDtFinal(("31/04/2015"));
+        rel.setDtInicial(("01/01/2015"));
+        rel.setDtFinal(("01/01/2016"));
         resultado = fachada.transacoesPeriodo(rel);
 
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
-                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
+                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " " 
+                    +" dt" + s.getTransacao().getDtCadastro() + " "
                     + "Mês: " + s.getMes());
 
             System.out.println();
@@ -197,8 +198,8 @@ public class MainTestes {
         for (EntidadeDominio e : resultado.getEntidades()) {
             EntidadeRelatorio s = (EntidadeRelatorio) e;
             System.out.print("Transção: " + s.getTransacao().getTipoDeTransacao() + " "
-                    + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
-                    + "Mês: " + s.getMes());
+                            + "Quantidade: " + s.getTransacao().getQtdeDoTipo() + " "
+                            + "Mês: " + s.getMes());
 
             System.out.println();
         }
